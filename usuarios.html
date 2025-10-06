@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bienvenido a PETRICOR</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- VIDEO DE FONDO -->
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="videos/v inicio.mp4" type="video/mp4" />
+    Tu navegador no soporta videos HTML5.
+  </video>
+
+  <!-- CONTENEDOR DEL FORMULARIO -->
+  <div class="form-container">
+    <h1 class="titulo">PETRICOR</h1>
+    <form action="guardar_usuario.php" method="POST" onsubmit="return validarFormulario()">
+      <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+      <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required>
+      <input type="number" id="edad" name="edad" placeholder="Edad" required min="1">
+      <input type="email" id="correo" name="correo" placeholder="Correo electrónico" required>
+      <select id="rol" name="rol" required>
+        <option value="">Selecciona tu rol</option>
+        <option value="agricultor">Agricultor</option>
+        <option value="docente">Docente</option>
+        <option value="estudiante">Estudiante</option>
+        <option value="otro">Otro</option>
+      </select>
+      <input type="submit" value="Registrarme">
+    </form>
+
+    <!-- ENLACE A LOGIN -->
+    <p style="text-align:center; margin-top:20px;">
+      ¿Ya tienes cuenta? <a href="login.php" style="color:#fff; font-weight:bold; text-decoration:underline;">Inicia sesión</a>
+    </p>
+  </div>
+
+  <!-- Validación -->
+  <script>
+    function validarFormulario() {
+      const nombre = document.getElementById("nombre").value.trim();
+      const apellidos = document.getElementById("apellidos").value.trim();
+      const edad = document.getElementById("edad").value;
+      const correo = document.getElementById("correo").value.trim();
+      const rol = document.getElementById("rol").value;
+
+      if (!nombre || !apellidos || !edad || !correo || !rol) {
+        alert("Por favor, completa todos los campos antes de continuar.");
+        return false;
+      }
+
+      alert("¡Bienvenido a PETRICOR, " + nombre + "!");
+      return true;
+    }
+  </script>
+
+  <!-- MÚSICA DE FONDO -->
+  <audio autoplay loop id="musica" volume="0.5">
+    <source src="musica.mp3" type="audio/mpeg">
+    Tu navegador no soporta el audio HTML5.
+  </audio>
+
+  <!-- BOTÓN DE PAUSA/REPRODUCCIÓN -->
+  <button onclick="toggleMusica()" style="
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    z-index: 10;
+  ">🎵 Música</button>
+
+  <script>
+    const musica = document.getElementById("musica");
+    let reproduciendo = true;
+
+    function toggleMusica() {
+      if (reproduciendo) {
+        musica.pause();
+      } else {
+        musica.play();
+      }
+      reproduciendo = !reproduciendo;
+    }
+  </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vocabulario</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #c2f0ea, #d0f5f1);
+      color: #07463b;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 1rem 1rem;
+      background: #0a3d2f;
+      color: white;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+    }
+
+    .search-box {
+      text-align: center;
+      margin: 2rem auto;
+    }
+    .letter-bar {
+      text-align: center;
+      margin: 1rem auto 2rem;
+      padding: 0.5rem;
+      background: #e0f7f1;
+      border-radius: 20px;
+      max-width: 90%;
+      overflow-x: auto;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .letter-bar a {
+      display: inline-block;
+      margin: 0.2rem 0.4rem;
+      padding: 0.5rem 0.8rem;
+      background-color: #0a3d2f;
+      color: white;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .letter-bar a:hover {
+      background-color: #48b78e;
+      transform: scale(1.1);
+    }
+
+    .search-box input {
+      padding: 0.7rem 1.2rem;
+      width: 80%;
+      max-width: 500px;
+      font-size: 1rem;
+      border-radius: 25px;
+      border: 2px solid #0a3d2f;
+      outline: none;
+    }
+
+    section {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: #ffffffe8;
+      padding: 2rem;
+      border-radius: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    section h2 {
+      font-size: 2rem;
+      color: #0a3d2f;
+      margin-bottom: 1rem;
+    }
+
+    section ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    section li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #cde4e0;
+    }
+
+    section li strong {
+      color: #084439;
+    }
+
+    .letter-icon {
+      font-size: 2rem;
+      margin-right: 0.5rem;
+    }
+
+    .bubble {
+      position: fixed;
+      border-radius: 50%;
+      background: rgba(72, 183, 142, 0.25);
+      animation: float 20s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0.3);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-20vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #btn-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #48b78e;
+      color: white;
+      padding: 0.7rem 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+
+    #btn-top:hover {
+      background: #2f7b5a;
+    }
+
+    .volver {
+      display: block;
+      margin: 3rem auto 1rem;
+      text-align: center;
+    }
+
+    .volver a {
+      background: #0a3d2f;
+      color: white;
+      text-decoration: none;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .volver a:hover {
+      background: #48b78e;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📚 Vocabulario Hidropónico</h1>
+    <p>Explora palabras clave de forma divertida y educativa</p>
+  </header>
+
+  <!-- Burbujas flotantes -->
+  <div class="bubble" style="width:50px;height:50px;left:10%;animation-duration:30s;"></div>
+  <div class="bubble" style="width:80px;height:80px;left:30%;animation-duration:40s;"></div>
+  <div class="bubble" style="width:60px;height:60px;left:60%;animation-duration:35s;"></div>
+  <div class="bubble" style="width:40px;height:40px;left:80%;animation-duration:45s;"></div>
+
+  <!-- Buscador -->
+  <div class="search-box">
+    <!-- Barra de letras -->
+    <div class="letter-bar">
+      <a href="#letraA">A</a><a href="#letraB">B</a><a href="#letraC">C</a><a href="#letraD">D</a><a href="#letraE">E</a>
+      <a href="#letraF">F</a><a href="#letraH">H</a><a href="#letraI">I</a><a href="#letraL">L</a><a href="#letraM">M</a>
+      <a href="#letraN">N</a><a href="#letraO">O</a><a href="#letraP">P</a><a href="#letraR">R</a><a href="#letraS">S</a>
+      <a href="#letraT">T</a><a href="#letraU">U</a><a href="#letraV">V</a>
+    </div>
+
+    <input type="text" id="buscador" placeholder="🔍 Buscar palabra...">
+  </div>
+
+  <!-- Vocabulario -->
+  <div id="vocabulario">
+
+    <!-- 🔤 A -->
+    <section id="letraA">
+      <h2>🔤 A</h2>
+      <ul>
+        <li><strong>Acidez:</strong> Propiedad de las sustancias que tienen pH inferior a 7. Se relaciona con la cantidad de iones de hidrógeno presentes en una disolución.</li>
+        <li><strong>Agricultura:</strong> Cultivo de la tierra; arte de cultivar la tierra.</li>
+        <li><strong>Agroquímico:</strong> Sustancia química usada en agricultura, como pesticidas o fertilizantes.</li>
+        <li><strong>Algoritmo:</strong> Conjunto ordenado y finito de operaciones que permite hallar la solución de un problema.</li>
+        <li><strong>Ambiental:</strong> Relativo al medio ambiente.</li>
+        <li><strong>Análisis fenológico:</strong> Estudio de las fases de desarrollo de las plantas y su relación con factores climáticos.</li>
+        <li><strong>Automatización:</strong> Aplicación de métodos automáticos a procesos para reducir la intervención humana.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 B -->
+    <section id="letraB">
+      <h2>🔤 B</h2>
+      <ul>
+        <li><strong>Biodiversidad:</strong> Variedad de especies animales y vegetales en un entorno.</li>
+        <li><strong>Biotecnología:</strong> Aplicación de organismos vivos o sus componentes para obtener productos útiles.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 C -->
+    <section id="letraC">
+      <h2>🔤 C</h2>
+      <ul>
+        <li><strong>Cambio climático:</strong> Alteración global del clima debido a factores naturales y humanos.</li>
+        <li><strong>Capacitación:</strong> Acción de instruir o preparar a alguien para una tarea.</li>
+        <li><strong>Ciclo de cultivo:</strong> Período completo desde la siembra hasta la cosecha de una planta.</li>
+        <li><strong>Clima:</strong> Conjunto de condiciones atmosféricas de una región durante un periodo largo.</li>
+        <li><strong>Conectividad:</strong> Capacidad de un sistema para interaccionar con otros.</li>
+        <li><strong>Conductividad eléctrica (CE):</strong> Medida de la capacidad de una solución para conducir corriente eléctrica; indica la cantidad de sales disueltas.</li>
+        <li><strong>Consumo responsable:</strong> Uso de bienes de forma consciente para minimizar el impacto ambiental.</li>
+        <li><strong>Creatividad:</strong> Capacidad de crear cosas nuevas y útiles.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 D -->
+    <section id="letraD">
+      <h2>🔤 D</h2>
+      <ul>
+        <li><strong>Degradación del suelo:</strong> Pérdida de fertilidad del suelo por prácticas inadecuadas.</li>
+        <li><strong>Desarrollo sostenible:</strong> Desarrollo que satisface las necesidades actuales sin comprometer las de generaciones futuras.</li>
+        <li><strong>Desnutrición:</strong> Estado patológico causado por dieta insuficiente o inadecuada.</li>
+        <li><strong>Digitalización:</strong> Conversión de información analógica a formato digital.</li>
+        <li><strong>Disolución nutritiva:</strong> Mezcla homogénea de nutrientes disueltos en agua utilizada en hidroponía.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 E -->
+    <section id="letraE">
+      <h2>🔤 E</h2>
+      <ul>
+        <li><strong>Eficiencia:</strong> Capacidad de lograr un objetivo con el mínimo de recursos.</li>
+        <li><strong>Energía renovable:</strong> Energía obtenida de fuentes naturales que se regeneran constantemente.</li>
+        <li><strong>Entorno controlado:</strong> Espacio en el que se regulan artificialmente las condiciones climáticas.</li>
+        <li><strong>Evaporación:</strong> Paso del agua del estado líquido al gaseoso.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 F -->
+    <section id="letraF">
+      <h2>🔤 F</h2>
+      <ul>
+        <li><strong>Fertilidad del suelo:</strong> Capacidad del suelo para proporcionar nutrientes a las plantas.</li>
+        <li><strong>Fotorresistor (LDR):</strong> Sensor cuya resistencia cambia según la intensidad de la luz.</li>
+        <li><strong>Fotosíntesis:</strong> Proceso por el cual las plantas convierten luz en energía química.</li>
+        <li><strong>Frecuencia de riego:</strong> Número de veces que se aplica agua a un cultivo.</li>
+        <li><strong>Función sensorial:</strong> Capacidad de un sensor para detectar y traducir una variable física.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 H -->
+    <section id="letraH">
+      <h2>🔤 H</h2>
+      <ul>
+        <li><strong>Hardware:</strong> Conjunto de componentes físicos de un sistema informático o electrónico.</li>
+        <li><strong>Hidroponía:</strong> Técnica de cultivo sin suelo, usando soluciones nutritivas.</li>
+        <li><strong>Humedad relativa:</strong> Cantidad de vapor de agua en el aire respecto al máximo que podría contener a esa temperatura.</li>
+        <li><strong>Huella hídrica:</strong> Cantidad de agua utilizada en la producción de un bien o servicio.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 I -->
+    <section id="letraI">
+      <h2>🔤 I</h2>
+      <ul>
+        <li><strong>Impacto ambiental:</strong> Alteración al medio ambiente provocada por una actividad humana.</li>
+        <li><strong>Indicador LED:</strong> Luz que se enciende o apaga para mostrar el estado de un sistema.</li>
+        <li><strong>Innovación tecnológica:</strong> Introducción de nuevas tecnologías que mejoran procesos o productos.</li>
+        <li><strong>Inocuidad:</strong> Que no causa daño. En alimentos, se refiere a que son seguros para el consumo humano.</li>
+        <li><strong>Interfaz gráfica:</strong> Medio visual por el cual el usuario interactúa con un sistema digital.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 L -->
+    <section id="letraL">
+      <h2>🔤 L</h2>
+      <ul>
+        <li><strong>LED (diodo emisor de luz):</strong> Componente electrónico que emite luz al recibir corriente.</li>
+        <li><strong>Luz artificial:</strong> Fuente luminosa generada por medios eléctricos, útil en ambientes sin luz solar.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 M -->
+    <section id="letraM">
+      <h2>🔤 M</h2>
+      <ul>
+        <li><strong>Macroambiente:</strong> Conjunto de factores externos que afectan un sistema.</li>
+        <li><strong>Microambiente:</strong> Condiciones particulares que rodean una planta o grupo de plantas.</li>
+        <li><strong>Migración rural-urbana:</strong> Movimiento de personas desde el campo hacia la ciudad.</li>
+        <li><strong>Modelado 3D:</strong> Representación gráfica tridimensional de objetos, usada en diseño técnico.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 N -->
+    <section id="letraN">
+      <h2>🔤 N</h2>
+      <ul>
+        <li><strong>Nutriente:</strong> Sustancia necesaria para el crecimiento y desarrollo de organismos vivos.</li>
+        <li><strong>Nutrición vegetal:</strong> Proceso por el cual las plantas absorben y utilizan nutrientes esenciales.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 O -->
+    <section id="letraO">
+      <h2>🔤 O</h2>
+      <ul>
+        <li><strong>Optimización:</strong> Mejora de un proceso para obtener mejores resultados con menos recursos.</li>
+        <li><strong>Oxigenación:</strong> Proceso de suministro de oxígeno, importante para raíces en hidroponía.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 P -->
+    <section id="letraP">
+      <h2>🔤 P</h2>
+      <ul>
+        <li><strong>Parámetro:</strong> Variable medida que se utiliza para monitorear un sistema.</li>
+        <li><strong>Petricor:</strong> Olor producido por la lluvia al caer sobre suelos secos.</li>
+        <li><strong>pH:</strong> Medida de la acidez o alcalinidad de una solución.</li>
+        <li><strong>Plataforma Arduino:</strong> Sistema de desarrollo de código abierto para electrónica automatizada.</li>
+        <li><strong>Producción agrícola:</strong> Generación de alimentos mediante técnicas de cultivo.</li>
+        <li><strong>Prototipo:</strong> Primer modelo de prueba de un sistema o producto.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 R -->
+    <section id="letraR">
+      <h2>🔤 R</h2>
+      <ul>
+        <li><strong>Rango óptimo:</strong> Intervalo ideal de valores para una variable determinada.</li>
+        <li><strong>Reciclaje de nutrientes:</strong> Reutilización de nutrientes en sistemas cerrados como la hidroponía.</li>
+        <li><strong>Recirculación:</strong> Movimiento continuo de agua o nutrientes dentro de un sistema.</li>
+        <li><strong>Resiliencia:</strong> Capacidad de un sistema para adaptarse a cambios o superar adversidades.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 S -->
+    <section id="letraS">
+      <h2>🔤 S</h2>
+      <ul>
+        <li><strong>Sensor:</strong> Dispositivo que detecta cambios físicos y genera una señal.</li>
+        <li><strong>Sequía:</strong> Escasez prolongada de agua por falta de lluvia.</li>
+        <li><strong>Sostenibilidad:</strong> Cualidad de algo que puede mantenerse sin agotar recursos o dañar el entorno.</li>
+        <li><strong>Substrato:</strong> Medio físico (como fibra de coco o perlita) donde se sostienen las raíces en hidroponía.</li>
+        <li><strong>Software libre:</strong> Programa que puede ser usado, modificado y distribuido libremente.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 T -->
+    <section id="letraT">
+      <h2>🔤 T</h2>
+      <ul>
+        <li><strong>Temperatura:</strong> Medida de calor o frío, esencial para el crecimiento vegetal.</li>
+        <li><strong>Termoradiación:</strong> Emisión de radiación térmica por efecto del calor.</li>
+        <li><strong>Tasa de refresco:</strong> Frecuencia con la que una imagen es actualizada en pantalla (Hz).</li>
+        <li><strong>Transpiración vegetal:</strong> Pérdida de agua por parte de las plantas a través de los estomas.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 U -->
+    <section id="letraU">
+      <h2>🔤 U</h2>
+      <ul>
+        <li><strong>Unidad de medida:</strong> Estándar utilizado para cuantificar magnitudes físicas.</li>
+        <li><strong>Urbanización:</strong> Desarrollo de terrenos rurales en zonas urbanas, muchas veces por migración.</li>
+      </ul>
+    </section>
+
+    <!-- 🔤 V -->
+    <section id="letraV">
+      <h2>🔤 V</h2>
+      <ul>
+        <li><strong>Variable ambiental:</strong> Cualquier factor físico o químico del entorno que afecta a los organismos.</li>
+        <li><strong>Ventilación forzada:</strong> Sistema que usa ventiladores para controlar la temperatura y la humedad.</li>
+        <li><strong>Viabilidad técnica:</strong> Posibilidad de que un proyecto pueda realizarse desde el punto de vista tecnológico.</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <!-- Botón volver arriba -->
+  <button id="btn-top" onclick="scrollToTop()">⬆️ Arriba</button>
+
+  <!-- Botón volver a otras secciones -->
+  <div class="volver">
+    <a href="inicio.html">← Volver a Inicio</a>
+  </div>
+
+  <script>
+    const buscador = document.getElementById('buscador');
+    const vocabulario = document.getElementById('vocabulario');
+
+    buscador.addEventListener('keyup', function () {
+      const valor = this.value.toLowerCase();
+      const secciones = vocabulario.querySelectorAll('section');
+
+      secciones.forEach(sec => {
+        const palabras = sec.querySelectorAll('li');
+        let visible = false;
+
+        palabras.forEach(p => {
+          if (p.textContent.toLowerCase().includes(valor)) {
+            p.style.display = '';
+            visible = true;
+          } else {
+            p.style.display = 'none';
+          }
+        });
+
+        sec.style.display = visible ? '' : 'none';
+      });
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+

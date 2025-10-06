@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Super Floración  - AUREA</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* RESET & BASE */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: #0a3d2f;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+background-size: cover;
+
+    }
+
+    /* Fondo  */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(14, 56, 27, 0.65);
+      z-index: -1;
+    }
+
+    /* Hojas cayendo (SVG) */
+    .hoja {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 0 2px #145214);
+      animation-name: caerHoja;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    /* Animación  */
+    @keyframes caerHoja {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Diferentes posiciones y duraciones para hojas */
+    .hoja:nth-child(1) { left: 10vw; animation-duration: 14s; animation-delay: 0s; }
+    .hoja:nth-child(2) { left: 25vw; animation-duration: 18s; animation-delay: 5s; }
+    .hoja:nth-child(3) { left: 40vw; animation-duration: 12s; animation-delay: 2s; }
+    .hoja:nth-child(4) { left: 60vw; animation-duration: 16s; animation-delay: 7s; }
+    .hoja:nth-child(5) { left: 75vw; animation-duration: 15s; animation-delay: 4s; }
+    .hoja:nth-child(6) { left: 85vw; animation-duration: 20s; animation-delay: 8s; }
+
+    /* Burbujas flotantes */
+    body::after {
+      content: "";
+      position: fixed;
+      top: -100px; left: -100px;
+      width: 300vw; height: 300vh;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(164,255,160,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 70% 80%, rgba(100,255,180,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(180,255,220,0.1) 0%, transparent 40%);
+      animation: bubblesFloat 30s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+    @keyframes bubblesFloat {
+      0% {transform: translateY(0);}
+      100% {transform: translateY(-20px);}
+    }
+
+    /* NAVBAR */
+    nav {
+      background: rgba(10, 61, 47, 0.9);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      backdrop-filter: blur(6px);
+      border-radius: 0 0 20px 20px;
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    nav a {
+      color: #c2e9fb;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      padding: .3rem .7rem;
+      border-radius: 8px;
+      transition: background .3s, transform .3s;
+      box-shadow: 0 0 8px transparent;
+      user-select: none;
+    }
+    nav a:hover,
+    nav a.active {
+      background: #48b78e;
+      color: #fff;
+      box-shadow: 0 0 20px #48b78e;
+      transform: scale(1.15);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    main {
+      max-width: 900px;
+      margin: 4rem auto 6rem;
+      background: rgba(255 255 255 / 0.85);
+      border-radius: 25px;
+      padding: 3rem 3rem 4rem;
+      box-shadow: 0 8px 45px rgba(10,61,47,.35);
+      color: #0a3d2f;
+      position: relative;
+      overflow: hidden;
+      user-select: text;
+    }
+
+    /* TÍTULO  */
+    h1 {
+      font-weight: 900;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #2f7b54;
+      text-shadow:
+        0 0 7px #a7f7a1,
+        0 0 20px #48b78e,
+        0 0 40px #2f7b54;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+      user-select: none;
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes titleGlow {
+      0% {text-shadow:
+        0 0 5px #a7f7a1,
+        0 0 15px #48b78e,
+        0 0 30px #2f7b54;}
+      100% {text-shadow:
+        0 0 15px #d9f6d9,
+        0 0 40px #5ae45a,
+        0 0 80px #2f7b54;}
+    }
+
+    /* INTRO */
+    p.intro {
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.35rem;
+      line-height: 1.7;
+      text-align: center;
+      margin-bottom: 4rem;
+      color: #2f7b54;
+      user-select: text;
+    }
+
+    /* VENTAJAS Y DESVENTAJAS */
+    .flex-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 5rem;
+      perspective: 600px;
+    }
+    .ventaja, .desventaja {
+      flex: 1 1 320px;
+      border-radius: 20px;
+      padding: 2rem 2rem 2.5rem;
+      box-shadow:
+        0 0 20px rgba(72,183,142,0.4),
+        inset 0 0 15px rgba(72,183,142,0.2);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #14431f;
+      background: linear-gradient(135deg, #d4edda, #b6d7bb);
+      position: relative;
+      cursor: default;
+      transition:
+        transform 0.35s cubic-bezier(0.45, 0, 0.55, 1),
+        box-shadow 0.35s cubic-bezier(0.45, 0, 0.55, 1);
+      user-select: none;
+      will-change: transform;
+      transform-style: preserve-3d;
+    }
+    .ventaja:hover {
+      box-shadow:
+        0 20px 50px rgba(72,183,142,0.8),
+        inset 0 0 35px rgba(72,183,142,0.4);
+      transform: translateY(-15px) rotateX(7deg);
+      color: #1a6426;
+      background: linear-gradient(135deg, #a7f0a0, #72c070);
+    }
+    .ventaja h2 {
+      font-weight: 900;
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      color: #2f7b54;
+      text-align: center;
+      user-select: none;
+      text-shadow: 0 0 7px #48b78e;
+    }
+    .ventaja ul li {
+      margin-bottom: 1rem;
+      padding-left: 1.8rem;
+      position: relative;
+      line-height: 1.45;
+    }
+    /* Icono check personalizado */
+    .ventaja ul li::before {
+      content: "✔️";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 1.3rem;
+      color: #2f7b54;
+      filter: drop-shadow(0 0 1px #2f7b54);
+    }
+
+    /* DESVENTAJAS */
+    .desventaja {
+      background: linear-gradient(135deg, #f9d4d6, #f5b2b5);
+      color: #631b1e;
+      box-shadow:
+        0 0 20px rgba(183,72,72,0.4),
+        inset 0 0 15px rgba(183,72,72,0.2);
+      font-weight: 800;
+    }
+    .desventaja:hover {
+      box-shadow:
+        0 20px 50px rgba(183,72,72,0.8),
+        inset 0 0 35px rgba(183,72,72,0.4);
+      transform: translateY(-15px) rotateX(7deg);
+      color: #7b1f23;
+      background: linear-gradient(135deg, #f5a7ab, #cf6e73);
+    }
+    .desventaja h2 {
+      font-weight: 900;
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      color: #7b2f38;
+      text-align: center;
+      user-select: none;
+      text-shadow: 0 0 7px #7b2f38;
+    }
+    .desventaja ul li {
+      margin-bottom: 1rem;
+      padding-left: 1.8rem;
+      position: relative;
+      line-height: 1.45;
+    }
+    /* Icono cruz personalizado */
+    .desventaja ul li::before {
+      content: "❌";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 1.3rem;
+      color: #7b2f38;
+      filter: drop-shadow(0 0 1px #7b2f38);
+    }
+
+    /* CARRUSEL VIDEOS */
+    #carrusel-agro {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      background: #f0f9f5;
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 10px 35px rgba(0,0,0,.18);
+      user-select: none;
+      border: 3px solid #48b78e;
+    }
+    #carrusel-agro h3 {
+      text-align: center;
+      font-weight: 900;
+      font-size: 2.3rem;
+      margin: 1.5rem 0 1rem;
+      color: #0a3d2f;
+      text-shadow: 0 0 8px #48b78e;
+    }
+    .slider-agro {
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+      will-change: transform;
+    }
+    .slide-agro {
+      min-width: 100%;
+      padding: 1rem 2rem 3rem;
+      text-align: center;
+      user-select: none;
+    }
+    .slide-agro video {
+      width: 100%;
+      height: 280px;
+      border-radius: 20px;
+      box-shadow: 0 6px 22px rgba(0,0,0,.3);
+      border: 5px solid #48b78e;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .slide-agro video:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 45px rgba(72,183,142,0.8);
+    }
+    .slide-agro p {
+      margin-top: 1.2rem;
+      font-weight: 700;
+      font-style: italic;
+      color: #2f7b54;
+      text-shadow: 0 0 4px #a7f7a1;
+      user-select: text;
+    }
+    .controles-agro {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .controles-agro button {
+      background: rgba(72,183,142,.9);
+      border: none;
+      color: #fff;
+      font-size: 2.8rem;
+      padding: 0 1.3rem;
+      border-radius: 50%;
+      cursor: pointer;
+      pointer-events: all;
+      box-shadow: 0 8px 22px rgba(0,0,0,.35);
+      transition: background .3s, transform .3s;
+      user-select: none;
+    }
+    .controles-agro button:hover {
+      background: #2f7b5a;
+      transform: scale(1.3);
+    }
+
+    /* INDICADORES DEL CARRUSEL */
+    #carrusel-agro .indicators {
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      user-select: none;
+      z-index: 5;
+    }
+    #carrusel-agro .indicators button {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: none;
+      background-color: #c2e9fb;
+      opacity: 0.6;
+      cursor: pointer;
+      transition: opacity 0.3s, transform 0.3s;
+      box-shadow: 0 0 6px transparent;
+    }
+    #carrusel-agro .indicators button.active {
+      opacity: 1;
+      background-color: #48b78e;
+      box-shadow: 0 0 12px #48b78e;
+      transform: scale(1.5);
+    }
+    #carrusel-agro .indicators button:hover {
+      opacity: 0.9;
+      transform: scale(1.2);
+    }
+
+    /* ENCUESTA */
+    .encuesta {
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 800;
+      font-style: italic;
+      color: #0a3d2f;
+      user-select: text;
+    }
+    .encuesta a {
+      color: #48b78e;
+      text-decoration: none;
+      font-weight: 900;
+      padding: 0.3rem 0.6rem;
+      border-radius: 25px;
+      box-shadow: 0 0 14px #48b78e;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    .encuesta a:hover {
+      color: #2f7b5a;
+      background: #a7f7a1;
+      text-decoration: underline;
+      box-shadow: 0 0 24px #2f7b5a;
+    }
+
+    /* NAVEGACIÓN ENTRE APARTADOS */
+    .nav-apartados {
+      margin-top: 5rem;
+      display: flex;
+      justify-content: center;
+      gap: 2.8rem;
+      flex-wrap: wrap;
+      user-select: none;
+    }
+    .nav-apartados a {
+      background: #48b78e;
+      color: #fff;
+      padding: 1rem 2.4rem;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      text-decoration: none;
+      box-shadow: 0 8px 25px rgba(72,183,142,.9);
+      transition: background 0.3s, transform 0.3s;
+      display: inline-block;
+    }
+    .nav-apartados a:hover {
+      background: #2f7b5a;
+      transform: scale(1.1);
+      box-shadow: 0 12px 35px rgba(47,123,90,0.9);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .flex-container {
+        flex-direction: column;
+        gap: 
+    @media (max-width: 768px) {
+      .flex-container {
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .slide-agro video {
+        height: 200px;
+      }
+      main {
+        margin: 2rem 1rem 3rem;
+        padding: 2rem 1.5rem 3rem;
+      }
+      nav ul {
+        gap: 1rem;
+      }
+      nav a {
+        font-size: 1rem;
+        padding: 0.25rem 0.5rem;
+      }
+      .nav-apartados {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .nav-apartados a {
+        padding: 0.8rem 1.8rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <ul>
+      <li><a href="inicio.html">Inicio</a></li>
+      <li><a href="prototipo.html">Prototipo</a></li>
+      <li><a href="materiales.html">Materiales</a></li>
+      <li><a href="beneficios.html">Beneficios</a></li>
+      <li><a href="agro_tradicional.html" class="active">Agro Tradicional</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="usuarios/perfil.php">Perfil</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hojas cayendo SVG -->
+  <svg class="hoja" style="top: -50px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#3a7a12">
+    <path d="M32 0c-5 0-12 7-12 12s7 12 12 12 12-7 12-12-7-12-12-12z"/>
+  </svg>
+  <svg class="hoja" style="top: -80px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#2e6b0a">
+    <path d="M20 0c-4 0-9 6-9 9s6 9 9 9 9-6 9-9-6-9-9-9z"/>
+  </svg>
+  <svg class="hoja" style="top: -60px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#4a9e21">
+    <path d="M40 0c-6 0-14 8-14 14s8 14 14 14 14-8 14-14-8-14-14-14z"/>
+  </svg>
+  <svg class="hoja" style="top: -90px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#3f8f19">
+    <path d="M25 0c-5 0-11 7-11 11s7 11 11 11 11-7 11-11-7-11-11-11z"/>
+  </svg>
+  <svg class="hoja" style="top: -40px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#2b6d0a">
+    <path d="M30 0c-3 0-8 5-8 8s5 8 8 8 8-5 8-8-5-8-8-8z"/>
+  </svg>
+  <svg class="hoja" style="top: -70px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#388e12">
+    <path d="M28 0c-4 0-10 7-10 10s7 10 10 10 10-7 10-10-7-10-10-10z"/>
+  </svg>
+
+  <main>
+    <h1>La Superfloración</h1>
+    <p class="intro">
+      La superfloración (o superbloom) es un fenómeno natural y poco común en el que una gran cantidad de flores silvestres, cuyas semillas han permanecido latentes en el suelo, germinan y florecen de forma masiva y simultánea.
+
+    <section class="flex-container">
+      <article class="ventaja">
+        <h2>Ventajas</h2>
+        <ul>
+          <li>Aumento de la biodiversidad: florecen muchas especies al mismo tiempo, atrayendo insectos, aves y polinizadores.</li>
+          <li>Renovación del ecosistema: mejora el suelo y ayuda a que nuevas plantas crezcan.</li>
+          <li>Atracción turística: genera un gran interés por su belleza natural, beneficiando la economía local.</li>
+          <li>Equilibrio ecológico: permite que las semillas dormidas germinen y mantengan el ciclo natural del ecosistema.</li>
+        </ul>
+      </article>
+
+      <article class="desventaja">
+        <h2>Desventajas</h2>
+        <ul>
+          <li>Daño por exceso de visitantes: el turismo puede pisar o destruir zonas frágiles de flores.</li>
+          <li>Cambio climático: si ocurre fuera de su ciclo natural, puede alterar los ecosistemas.</li>
+          <li>Plagas y sobrepoblación de insectos: la gran cantidad de flores puede atraer demasiados insectos que afecten otros cultivos.</li>
+          <li>Fuga de nutrientes del suelo: al florecer tantas plantas, el suelo puede quedar con menos nutrientes.</li>
+          <li>Fenómeno temporal: su belleza dura poco tiempo, y luego el paisaje vuelve a ser árido o seco.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- Carrusel de Videos -->
+    <section id="carrusel-agro" aria-label="Carrusel de videos sobre agricultura tradicional">
+      <h3>Videos Informativos</h3>
+      <div class="slider-agro">
+        <div class="slide-agro">
+          <video controls preload="metadata" tabindex="0">
+            <source src="videos/dorelyexpo.mp4"video/webm" />
+            <source src="videos/dorelyexpo.mp4" type="video/mp4" />
+            Tu navegador no soporta la reproducción de video.
+          </video>
+          <p>Introducción a la agricultura tradicional</p>
+        </div>
+        <div class="slide-agro">
+          <video controls preload="metadata" tabindex="0">
+            <source src="videos/tecnicas.mp4" type="video/webm" />
+            <source src="videos/tecnicas.mp4" type="video/mp4" />
+            Tu navegador no soporta la reproducción de video.
+          </video>
+          <p>Técnicas ancestrales para el cultivo sostenible</p>
+        </div>
+        <div class="slide-agro">
+          <video controls preload="metadata" tabindex="0">
+            <source src="videos/tatianaexpo.mp4" type="video/webm" />
+            <source src="videos/tatianaexpo.mp4" type="video/mp4" />
+            Tu navegador no soporta la reproducción de video.
+          </video>
+          <p>Impacto ambiental y social de la agricultura tradicional</p>
+        </div>
+      </div>
+
+      <div class="controles-agro" role="group" aria-label="Controles del carrusel">
+        <button id="prev" aria-label="Video anterior">‹</button>
+        <button id="next" aria-label="Video siguiente">›</button>
+      </div>
+      <div class="indicators" role="tablist" aria-label="Indicadores del carrusel">
+        <button aria-label="Video 1" aria-selected="true" role="tab"></button>
+        <button aria-label="Video 2" aria-selected="false" role="tab"></button>
+        <button aria-label="Video 3" aria-selected="false" role="tab"></button>
+      </div>
+    </section>
+
+    <!-- Encuesta -->
+    <p class="encuesta">
+      ¿Quieres ayudarnos? Participa en nuestra 
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeJ4A_xUwQ0WLBAO-ycfHJCa8LhmnUyc269QifscobXqx_B3w/viewform?usp=header" target="_blank" rel="noopener noreferrer" tabindex="0">
+        encuesta
+      </a>.
+    </p>
+
+    <!-- Navegación a otros apartados -->
+    <nav class="nav-apartados" aria-label="Navegación a otros apartados de PETRICOR">
+      <a href="inicio.html" tabindex="0">Inicio</a>
+      <a href="prototipo.html" tabindex="0">Prototipo</a>
+      <a href="materiales.html" tabindex="0">Materiales</a>
+      <a href="beneficios.html" tabindex="0">Beneficios</a>
+      <a href="nosotros.html" tabindex="0">Nosotros</a>
+      <a href="usuarios/perfil.php" tabindex="0">Perfil</a>
+    </nav>
+  </main>
+
+  <script>
+    // JS Carrusel videos
+    const slider = document.querySelector('.slider-agro');
+    const slides = document.querySelectorAll('.slide-agro');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const indicators = document.querySelectorAll('#carrusel-agro .indicators button');
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    function updateCarousel(index) {
+      slider.style.transform = `translateX(-${index * 100}%)`;
+      indicators.forEach((btn, i) => {
+        if (i === index) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+        } else {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateCarousel(currentIndex);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel(currentIndex);
+    });
+
+    indicators.forEach((btn, i) => {
+      btn.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarousel(currentIndex);
+      });
+    });
+
+    // Inicializar
+    updateCarousel(currentIndex);
+  </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+.carrusel-container {
+  max-width: 900px;
+  margin: 0 auto 50px;
+  text-align: center;
+}
+
+.carrusel {
+  position: relative;
+  overflow: hidden;
+  height: 320px;
+}
+
+.carrusel-item {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.carrusel-item.active {
+  display: flex;
+}
+
+.carrusel-item img {
+  width: 320px;
+  height: 180px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.carrusel-item h3 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #2a7f62;
+  margin-bottom: 8px;
+}
+
+.carrusel-item p {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 12px;
+  max-width: 600px;
+}
+
+.btn-leer {
+  background-color: #2a7f62;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-leer:hover {
+  background-color: #1b553d;
+}
+
+.carrusel-controles {
+  margin-top: 10px;
+}
+
+.carrusel-controles button {
+  background-color: #2a7f62;
+  color: white;
+  border: none;
+  font-size: 2rem;
+  padding: 5px 15px;
+  margin: 0 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.carrusel-controles button:hover {
+  background-color: #1b553d;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}

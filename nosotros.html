@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosotros</title>
+  <!-- Fuentes Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Pacifico&display=swap" rel="stylesheet" />
+
+  <!-- ==========================================================
+       ESTILOS
+  ========================================================== -->
+  <style>
+    /* -------- RESET -------- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #e1f7ff;
+      background: radial-gradient(circle at top left, #2b4865 0%, #1b2430 80%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    a { text-decoration: none; color: #9df0ff; transition: color 0.3s ease; }
+    a:hover { color: #34eaff; }
+
+    h1, h2, h3 { font-weight: 700; text-shadow: 1px 1px 6px rgba(0,0,0,0.7); }
+    h1 { font-family: 'Pacifico', cursive; font-size: 3.5rem; color: #7ffcff; margin-bottom: 0.5rem; }
+    h2 { font-size: 2.5rem; margin-bottom: 1.2rem; color: #aaf6ff; border-bottom: 3px solid #34eaff; max-width: fit-content; }
+    h3 { font-size: 1.8rem; color: #c4f8ff; margin-bottom: 0.7rem; }
+
+    p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1rem; color: #cdefff; text-shadow: 0 0 4px #34eaff55; }
+
+    /* -------- NAVBAR SUPERIOR -------- */
+    nav {
+      background: #0d2336cc;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      box-shadow: 0 0 14px #34eaffaa;
+    }
+
+    nav ul { list-style: none; display: flex; gap: 2.2rem; }
+    nav a {
+      padding: 0.5rem 1rem;
+      color: #9df0ff;
+      font-weight: 600;
+      font-size: 1.05rem;
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 0 #34eaff;
+      transition: all 0.4s ease;
+    }
+    nav a:hover, nav a.active { box-shadow: inset 220px 0 0 0 #34eaff; color: #0d2336; }
+
+    /* -------- HEADER INTRO -------- */
+    header {
+      text-align: center;
+      padding: 3rem 1rem 5rem;
+      background: radial-gradient(circle at bottom right, #3e7ba8, #1b2430);
+      box-shadow: 0 0 40px #34eaff88 inset;
+    }
+    header p {
+      font-size: 1.3rem;
+      max-width: 620px;
+      margin: 0.5rem auto 0;
+      color: #d2faff;
+      font-weight: 600;
+      text-shadow: 0 0 8px #34eaffaa;
+    }
+
+    /* ---------------------------------------------------------------------
+       SECCIÓN INTEGRANTES
+    --------------------------------------------------------------------- */
+    #integrantes {
+      padding: 3rem 1rem 4rem;
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .cards-team {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #265d82, #13314b);
+      border-radius: 20px;
+      padding: 1.5rem 1rem 2rem;
+      width: 300px;
+      box-shadow: 0 8px 26px #0d2133;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 12px 36px #34eaffcc; }
+
+    .card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #34eaffaa;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Nombres en la tarjeta */
+    .card h3 {
+      margin-bottom: 0.5rem;
+      color: #e7feff;
+      text-shadow: 0 0 6px #34eaff99;
+    }
+
+    /* ---------------------------------------------------------------------
+       SECCIÓN CONTACTO REDES
+    --------------------------------------------------------------------- */
+    #contacto {
+      background: #12394dcc;
+      border-radius: 20px;
+      padding: 3rem 1rem 4rem;
+      margin: 4rem auto;
+      max-width: 980px;
+      box-shadow: 0 0 28px #34eaffaa;
+      text-align: center;
+    }
+
+    #contacto h2 { margin: 0 auto 2rem; text-align: center; font-family: 'Pacifico', cursive; }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .social-icons a {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #34eaff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px #34eaffaa;
+      transition: transform 0.3s ease, background 0.3s ease;
+      position: relative;
+    }
+
+    .social-icons a:hover {
+      transform: scale(1.25) rotate(10deg);
+      background: #2ad4ff;
+      box-shadow: 0 12px 32px #2ad4ffdd;
+    }
+
+    .social-icons img {
+      width: 38px;
+      height: 38px;
+      filter: drop-shadow(0 0 5px #0d2336cc);
+      user-select: none;
+    }
+
+    /* WhatsApp botón */
+    .btn-whatsapp {
+      display: inline-block;
+      margin-top: 1rem;
+      background: linear-gradient(135deg, #1fa06b, #25d366);
+      color: #eafff7;
+      font-weight: 700;
+      padding: 1rem 2.6rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      box-shadow: 0 10px 32px #1fa06bcc;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-whatsapp:hover { transform: scale(1.12); box-shadow: 0 12px 40px #1fa06dee; }
+
+    /* ---------------------------------------------------------------------
+       SECCIÓN MAPA
+    --------------------------------------------------------------------- */
+    #mapa {
+      background: #184a7dcc;
+      border-radius: 20px;
+      max-width: 980px;
+      margin: 4rem auto;
+      padding: 3rem 1rem;
+      box-shadow: 0 0 30px #34eaffaa;
+      text-align: center;
+    }
+
+    #mapa h2 { font-family: 'Pacifico', cursive; margin: 0 auto 1.5rem; color: #c8fbff; }
+
+    .map-container {
+      width: 100%;
+      height: 420px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px #34eaffaa;
+    }
+
+    .map-container iframe { width: 100%; height: 100%; border: none; }
+
+    .map-container img.placeholder {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+   .imagen-final {
+  max-width: 85%;
+  margin: 3rem auto;
+  display: block;
+  border-radius: 20px;
+  box-shadow: 0 8px 28px #34eaff99;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: aparecer 1.5s ease-in-out;
+}
+
+.imagen-final:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 36px #34eaffcc;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+       FOOTER
+    --------------------------------------------------------------------- */
+    footer {
+      background: #0d2336cc;
+      padding: 1.3rem 2rem;
+      display: flex;
+      justify-content: center;
+      max-width: 980px;
+      margin: 0 auto;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      box-shadow: 0 -4px 22px #34eaff88;
+    }
+    footer a {
+      background: #34eaff;
+      color: #0d2336;
+      padding: 0.9rem 1.4rem 0.9rem 2.1rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      position: relative;
+      transition: transform 0.3s ease, background 0.3s ease;
+      box-shadow: 0 8px 22px #34eaffaa;
+    }
+    footer a:hover { transform: scale(1.15); background: #29c4ff; box-shadow: 0 10px 28px #29c4ffdd; }
+    footer a::before { content: '💧'; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 1.3rem; }
+    
+
+    /* ---------------------------------------------------------------------
+       STICKERS ANIMADOS (hidroponía)
+    --------------------------------------------------------------------- */
+    .sticker {
+      position: fixed; pointer-events: none; user-select: none;
+      animation: flotar 6s ease-in-out infinite; opacity: 0.85;
+      filter: drop-shadow(0 0 10px rgba(50, 200, 255, 0.55));
+    }
+    .stk-leaf { top: 15%; left: 5%; width: 80px; animation-delay: 0s; }
+    .stk-drop { top: 55%; right: 8%; width: 65px; animation-delay: 1.8s; }
+    .stk-plant { bottom: 12%; left: 10%; width: 95px; animation-delay: 3s; }
+    .stk-bubble { bottom: 25%; right: 12%; width: 70px; animation-delay: 4.2s; }
+
+    @keyframes flotar { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-18px);} }
+
+    /* ---------------------------------------------------------------------
+       RESPONSIVE
+    --------------------------------------------------------------------- */
+    @media(max-width: 768px) {
+      nav ul { gap: 1rem; }
+      nav a { font-size: 0.9rem; }
+      h1 { font-size: 2.8rem; }
+      h2 { font-size: 2rem; }
+      .card { width: 240px; }
+      .card img { height: 240px; }
+      .social-icons a { width: 60px; height: 60px; }
+      .btn-whatsapp { font-size: 1rem; padding: 0.8rem 2rem; }
+      .map-container { height: 320px; }
+      .extra-img { height: 280px; }
+      .sticker { width: 60px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ==========================================================
+       NAVBAR SUPERIOR
+  ========================================================== -->
+  <nav>
+    <ul>
+      <li><a href="inicio.html">Inicio</a></li>
+      <li><a href="prototipo.html">Prototipo</a></li>
+      <li><a href="materiales.html">Materiales</a></li>
+      <li><a href="beneficios.html">Beneficios</a></li>
+      <li><a href="agrotradicional.html">Agro Tradicional</a></li>
+      <li><a href="nosotros.html" class="active">Nosotros</a></li>
+      <li><a href="usuarios/perfil.php">Perfil</a></li>
+    </ul>
+  </nav>
+
+  <!-- ==========================================================
+       HEADER
+  ========================================================== -->
+  <header>
+    <h1>¡Conócenos!</h1>
+    <p>Aquí estamos las mentes creativas detrás de AUREA, listos para inspirarte con nuestro proyecto 💧🌱</p>
+  </header>
+
+  <!-- ==========================================================
+       SECCIÓN INTEGRANTES
+  ========================================================== -->
+  <section id="integrantes">
+    <h2>Equipo AUREA</h2>
+
+    <div class="cards-team">
+      <!-- =============== CARD 1 =============== -->
+      <div class="card">
+        <img src="img/aurea.jpg" alt="Foto Equipo" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       SECCIÓN CONTACTO
+  ========================================================== -->
+  <section id="contacto">
+    <h2>TE INVITO A COMUNICARTE CON NOSOTRAS</h2>
+
+    <div class="social-icons">
+  <a href="https://www.instagram.com/petricor_futurosostenible?igsh=cHVnbHQzOWl4NXFl" 
+     title="Instagram" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
+  </a>
+
+  <a href="https://www.facebook.com/profile.php?id=61578721077339&mibextid=ZbWKwL" 
+     title="Facebook" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" />
+  </a>
+
+  <a href="https://twitter.com" 
+     title="Twitter" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" />
+  </a>
+</div>
+
+
+    <!-- Botón WhatsApp -->
+    <a href="https://wa.me/573148025787" target="_blank" class="btn-whatsapp" title="Escríbenos a WhatsApp">Ir a WhatsApp</a>
+  </section>
+
+  <!-- ==========================================================
+       SECCIÓN MAPA
+  ========================================================== -->
+  <section id="mapa">
+    <h2>EL PROYECTO ESTA SIENDO REALIZADO EN...</h2>
+
+    <div class="map-container">
+      <!-- Google Maps Embed – Colegio Sugamuxi, Sogamoso -->
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.5677788659563!2d-72.92912372576966!3d5.717168094092789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e6ac1b45aeac45b%3A0xd7ec62a0b9e8b29a!2sColegio%20Sugamuxi!5e0!3m2!1ses!2sco!4v1720387200000!5m2!1ses!2sco"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <section id="imagen-final-proyecto">
+  <h2 class="titulo-decorado">Nuestra inspiración final 🌟</h2>
+  <img src="img/aurea2.jpg" alt="Imagen del proyecto PETRICOR" class="imagen-final">
+    </section>
+
+
+  </section>
+
+  <!-- ==========================================================
+       STICKERS DECORATIVOS
+  ========================================================== -->
+  <img src="https://cdn-icons-png.flaticon.com/512/863/863684.png" class="sticker stk-leaf" alt="Hoja" />
+  <img src="https://cdn-icons-png.flaticon.com/512/2907/2907482.png" class="sticker stk-drop" alt="Gota" />
+  <img src="https://cdn-icons-png.flaticon.com/512/427/427735.png" class="sticker stk-plant" alt="Planta" />
+  <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" class="sticker stk-bubble" alt="Burbuja" />
+
+  <!-- ==========================================================
+       FOOTER NAVEGACIÓN
+  ========================================================== -->
+  <footer>
+  <nav class="footer-nav">
+    <a href="inicio.html">Inicio</a>
+    <a href="prototipo.html">Prototipo</a>
+    <a href="materiales.html">Materiales</a>
+    <a href="beneficios.html">Beneficios</a>
+    <a href="agro.html">Agro Tradicional</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="perfil.php">Perfil</a>
+  </nav>
+</footer>
+
+
+  <!-- ==========================================================
+       SCRIPTS
+  ========================================================== -->
+  <script>
+   
+  </script>
+</body>
+</html>
+

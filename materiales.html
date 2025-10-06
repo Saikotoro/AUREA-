@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Indices Vegetativos - AUREA</title>
+
+  <!-- Fuentes Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Pacifico&display=swap"
+    rel="stylesheet" />
+
+  <!-- =========================================================
+       ESTILOS css
+       ========================================================= -->
+  <style>
+    /* ------------------------------------------------------------------
+       RESET & BASE TYPOGRAPHY
+       ------------------------------------------------------------------ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #d0f0fd;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: radial-gradient(circle at bottom left, #375a7f 0%, #1a2a45 80%);
+      position: relative;
+    }
+
+    a {
+      text-decoration: none;
+      color: #9df0ff;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #34eaff;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-weight: 700;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    h1 {
+      font-size: 3.6rem;
+      margin-bottom: 1rem;
+      font-family: 'Pacifico', cursive;
+      color: #6ef0ff;
+      text-shadow: 0 0 12px #34eaffbb;
+    }
+
+    h2 {
+      font-size: 2.4rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 3px solid #34eaff;
+      padding-bottom: 0.5rem;
+      max-width: max-content;
+      color: #a8e8ff;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #9df0ff;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #c0e8ff;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 4px #34eaff55;
+    }
+
+    ul {
+      list-style: inside disc;
+      color: #d7f2ff;
+      margin-bottom: 2rem;
+    }
+
+    /* ------------------------------------------------------------------
+       NAVBAR
+       ------------------------------------------------------------------ */
+    nav {
+      background: #122b42cc;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 0 14px #34eaffaa;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.2rem;
+    }
+
+    nav a {
+      color: #9df0ff;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 0 #34eaff;
+      transition: all 0.4s ease;
+    }
+
+    nav a:hover,
+    nav a.active {
+      box-shadow: inset 220px 0 0 0 #34eaff;
+      color: #122b42;
+    }
+
+    /* ------------------------------------------------------------------
+       HEADER INTRODUCTORIO
+       ------------------------------------------------------------------ */
+    header {
+      text-align: center;
+      padding: 3rem 1rem 5rem 1rem;
+      background: radial-gradient(circle at top center, #4578a1, #122b42);
+      box-shadow: 0 0 40px #34eaff88 inset;
+    }
+
+    header p {
+      font-size: 1.4rem;
+      max-width: 640px;
+      margin: 0 auto;
+      font-weight: 600;
+      color: #bff4ff;
+      text-shadow: 0 0 8px #34eaffaa;
+    }
+
+    /* ------------------------------------------------------------------
+       MAIN WRAPPER
+       ------------------------------------------------------------------ */
+    main {
+      padding: 3rem 1rem 6rem;
+      max-width: 980px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* ------------------------------------------------------------------
+       SECCIÓN SENSORES - ACORDEÓN INTERACTIVO
+       ------------------------------------------------------------------ */
+    #sensores {
+      background: #184a7dcc;
+      border-radius: 22px;
+      padding: 2.5rem;
+      box-shadow: 0 0 32px #34eaffaa;
+      margin-bottom: 4.5rem;
+    }
+
+    #sensores h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #b0eaff;
+      text-shadow: 0 0 12px #34eaffcc;
+    }
+
+    #sensores p.intro-sensor {
+      font-size: 1.3rem;
+      text-align: center;
+      font-weight: 600;
+      max-width: 760px;
+      margin: 0 auto 3rem;
+      color: #d0f8ff;
+    }
+
+    .accordion-header {
+      background: linear-gradient(135deg, #1e5389, #2c6bbd);
+      padding: 1rem 1.5rem;
+      border-radius: 18px;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.3rem;
+      box-shadow: 0 5px 15px #123a6b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.3s ease;
+      color: #c0e8ff;
+    }
+
+    .accordion-header:hover {
+      background: linear-gradient(135deg, #3898ff, #34eaff);
+      color: #122b42;
+      box-shadow: 0 10px 28px #34eaffcc;
+    }
+
+    .accordion-header.active {
+      background: linear-gradient(135deg, #34eaff, #34d1ff);
+      color: #122b42;
+      box-shadow: 0 15px 40px #34eaffee;
+    }
+
+    .accordion-header span.arrow {
+      font-size: 1.6rem;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-header.active span.arrow {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease, padding 0.4s ease;
+      background: #112c50cc;
+      border-radius: 0 0 18px 18px;
+      padding: 0 1.5rem;
+      color: #b5d8ffcc;
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+      box-shadow: inset 0 0 28px #123a6b;
+    }
+
+    .accordion-content.open {
+      max-height: 400px;
+      padding: 1.2rem 1.5rem 1.5rem;
+    }
+
+    .accordion-content img {
+      width: 100%;
+      max-width: 240px;
+      border-radius: 20px;
+      display: block;
+      margin: 1rem auto 0;
+      box-shadow: 0 0 20px #34eaffaa;
+      transition: transform 0.3s ease;
+      cursor: zoom-in;
+    }
+
+    .accordion-content img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 28px #34eaffee;
+    }
+
+    /* ------------------------------------------------------------------
+       SECCIÓN TUBOS - TARJETAS PLEGABLES
+       ------------------------------------------------------------------ */
+    #tubos {
+      background: #12315ccc;
+      border-radius: 22px;
+      padding: 2.5rem;
+      box-shadow: 0 0 32px #34eaffaa;
+      margin-bottom: 4.5rem;
+    }
+
+    #tubos h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.6rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #a4e4ff;
+      text-shadow: 0 0 12px #34eaffcc;
+    }
+
+    .tube-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .tube-item {
+      background: linear-gradient(135deg, #2a5bbd, #134fa3);
+      border-radius: 18px;
+      padding: 1rem 1.5rem;
+      width: 280px;
+      color: #c7e3ff;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 5px 15px #0e2f5e;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .tube-item:hover {
+      transform: scale(1.07);
+      box-shadow: 0 10px 30px #34eaffcc;
+    }
+
+    .tube-item span.arrow {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.6rem;
+      transition: transform 0.3s ease;
+    }
+
+    .tube-item.active span.arrow {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .tube-desc {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease, padding 0.4s ease;
+      background: #0f2751cc;
+      border-radius: 0 0 18px 18px;
+      color: #addcff;
+      font-weight: 500;
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+      box-shadow: inset 0 0 24px #134fa3cc;
+      padding: 0 1rem;
+    }
+
+    .tube-desc.open {
+      max-height: 320px;
+      padding: 1rem;
+    }
+
+    .tube-desc img {
+      width: 100%;
+      max-width: 260px;
+      border-radius: 18px;
+      display: block;
+      margin: 1rem auto 0;
+      box-shadow: 0 0 22px #34eaffaa;
+      transition: transform 0.3s ease;
+      cursor: zoom-in;
+    }
+
+    .tube-desc img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 28px #34eaffee;
+    }
+
+    /* ------------------------------------------------------------------
+       SECCIÓN NUTRIENTE - BLOQUE DESTACADO
+       ------------------------------------------------------------------ */
+    #nutriente {
+      background: linear-gradient(135deg, #3db39e, #1c605d);
+      border-radius: 22px;
+      padding: 3rem 2rem;
+      text-align: center;
+      color: #d0fff6;
+      box-shadow: 0 0 40px #2fc7b5cc inset;
+      margin-bottom: 5rem;
+    }
+
+    #nutriente h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      color: #e2fff8;
+      text-shadow: 0 0 12px #3de3bfcc;
+    }
+
+    #nutriente p {
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #c9fff6;
+      text-shadow: 0 0 6px #1a524dcc;
+    }
+
+    #nutriente ul {
+      max-width: 460px;
+      margin: 2rem auto 0;
+      list-style: inside circle;
+      color: #b4f5ec;
+      font-weight: 600;
+      text-shadow: 0 0 4px #2ff1deaa;
+    }
+
+    /* ------------------------------------------------------------------
+       SECCIÓN JUEGOS - BOTONES ANIMADOS
+       ------------------------------------------------------------------ */
+    #juegos {
+      background: #12394dcc;
+      border-radius: 22px;
+      padding: 3rem 2rem 4rem;
+      box-shadow: 0 0 32px #34eaffaa;
+      margin-bottom: 4rem;
+    }
+
+    #juegos h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #78dbff;
+      text-shadow: 0 0 12px #34eaffcc;
+    }
+
+    #juegos p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      max-width: 760px;
+      margin: 0 auto 2rem;
+      color: #a9e5ff;
+      text-shadow: 0 0 5px #34eaffaa;
+      text-align: center;
+    }
+
+    .btn-juego {
+      background: linear-gradient(135deg, #16a085, #1abc9c);
+      color: #d0fff6;
+      font-weight: 800;
+      padding: 1rem 2.5rem;
+      border-radius: 42px;
+      box-shadow: 0 8px 30px #16a085aa;
+      cursor: pointer;
+      display: inline-block;
+      margin: 0.8rem 1.2rem;
+      font-size: 1.15rem;
+      border: 2px solid transparent;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .btn-juego:hover {
+      background: linear-gradient(135deg, #1abc9c, #16a085);
+      box-shadow: 0 10px 40px #16a085dd;
+      transform: scale(1.1);
+      border-color: #d0fff6;
+      text-shadow: 0 0 14px #1bc8b7;
+    }
+
+    .btn-juego::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -40%;
+      width: 45%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: translateY(-50%) rotate(25deg);
+      transition: left 0.8s ease;
+      pointer-events: none;
+      filter: blur(4px);
+    }
+
+    .btn-juego:hover::before {
+      left: 150%;
+    }
+
+    /* ------------------------------------------------------------------
+       STICKERS DECORATIVOS & BICHITO
+       ------------------------------------------------------------------ */
+    .sticker {
+      position: fixed;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.85;
+      filter: drop-shadow(0 0 10px rgba(50, 200, 255, 0.55));
+      animation: floatUpDown 6s ease-in-out infinite;
+    }
+
+    .sticker.planta {
+      bottom: 14%;
+      left: 8%;
+      width: 90px;
+      animation-delay: 0s;
+    }
+
+    .sticker.sol {
+      top: 10%;
+      right: 14%;
+      width: 85px;
+      animation-delay: 1.2s;
+    }
+
+    .sticker.mariposa {
+      top: 38%;
+      left: 70%;
+      width: 65px;
+      animation-delay: 2.3s;
+    }
+
+    .sticker.perro {
+      bottom: 6%;
+      right: 6%;
+      width: 105px;
+      animation-delay: 3s;
+    }
+
+    .sticker.hoja {
+      top: 22%;
+      left: 4%;
+      width: 70px;
+      animation-delay: 4.2s;
+    }
+
+    .sticker.flor {
+      top: 64%;
+      right: 10%;
+      width: 80px;
+      animation-delay: 5.3s;
+    }
+
+    @keyframes floatUpDown {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-18px);
+      }
+    }
+
+    /* Bichito extra */
+    #bichito {
+      position: fixed;
+      bottom: 5%;
+      right: 4%;
+      width: 120px;
+      z-index: 999;
+      filter: drop-shadow(0 0 12px #34eaffee);
+      animation: floatBichito 5s ease-in-out infinite;
+    }
+
+    @keyframes floatBichito {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(8deg);
+      }
+    }
+
+    /* ------------------------------------------------------------------
+       FOOTER - NAVEGACIÓN GOTAS
+       ------------------------------------------------------------------ */
+    footer {
+      background: #0d2336cc;
+      padding: 1.3rem 2rem;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      box-shadow: 0 -4px 22px #34eaff88;
+    }
+
+    footer a {
+      background: #34eaff;
+      color: #122b42;
+      padding: 0.9rem 1.4rem 0.9rem 2.1rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      box-shadow: 0 8px 22px #34eaffaa;
+      position: relative;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    footer a::before {
+      content: "💧";
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.3rem;
+    }
+
+    footer a:hover {
+      background: #29c4ff;
+      transform: scale(1.15);
+      box-shadow: 0 10px 28px #29c4ffdd;
+    }
+
+    /* ------------------------------------------------------------------
+       RESPONSIVE - ACOMODO PARA PANTALLAS PEQUEÑAS
+       ------------------------------------------------------------------ */
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 1.2rem;
+      }
+
+      nav a {
+        font-size: 0.9rem;
+      }
+
+      header h1 {
+        font-size: 2.8rem;
+      }
+
+      header p {
+        font-size: 1.15rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      .btn-juego {
+        padding: 0.8rem 1.6rem;
+        font-size: 1rem;
+      }
+
+      #bichito {
+        width: 90px;
+      }
+
+      .sticker {
+        width: 60px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- =========================================================
+       BARRA DE NAVEGACIÓN
+       ========================================================= -->
+  <nav>
+    <ul>
+      <li><a href="inicio.html">Inicio</a></li>
+      <li><a href="prototipo.html">Explorador Satelital</a></li>
+      <li><a href="materiales.html" class="active">Indices Vegetativos</a></li>
+      <li><a href="beneficios.html">Cambio Global</a></li>
+      <li><a href="agrotradicional.html">Interactua</a></li>
+      <li><a href="nosotros.html">Evidencia</a></li>
+      <li><a href="usuarios/perfil.php">Nosotros</a></li>
+    </ul>
+  </nav>
+
+  <!-- =========================================================
+       ENCABEZADO
+       ========================================================= -->
+  <header>
+    <h1>Indices Vegetativos</h1>
+    <p>Explora los diferentes factores los cuales hacen posible la super floracion.</p>
+  </header>
+
+  <!-- =========================================================
+       CONTENIDO PRINCIPAL
+       ========================================================= -->
+  <main>
+    <!-- --------------------- SENSORES ---------------------- -->
+    <section id="sensores">
+      <h2>Observacion y Monitoreo Floral</h2>
+      <p class="intro-sensor">
+        Este <a href="https://dle.rae.es/sensor" target="_blank" rel="noopener noreferrer">apartado</a> analiza cómo se registra y estudia la superfloración mediante imágenes o fotografías.
+      </p>
+
+
+
+      <!-- Sensor de Temperatura -->
+      <div class="accordion-header" data-target="temp-content">
+        Satelites captando florescimiento
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-content" id="temp-content">
+        <p>
+          Permiten identificar las zonas donde se inicia y expande la superfloración.
+        </p>
+        <img
+          src="img/florescimiento.jpg"
+          alt="Sensor de Temperatura" />
+      </div>
+
+      <!-- Sensor de Humedad -->
+      <div class="accordion-header" data-target="hum-content">
+        Monitoreo con drones
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-content" id="hum-content">
+        <p>
+          Los drones capturan imágenes detalladas del terreno y la densidad de flores.
+        </p>
+        <img
+          src="img/dron.jpg"
+          alt="Sensor de Humedad" />
+      </div>
+
+      <!-- Fotoresistor -->
+      <div class="accordion-header" data-target="foto-content">
+        Registro fotográfico local
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-content" id="foto-content">
+        <p>
+          Fotografías tomadas por personas o investigadores en el lugar del fenómeno.
+        </p>
+        <img
+          src="img/persona.jpg"
+          alt="Fotoresistor" />
+      </div>
+      <!-- arduino uno -->
+      <div class="accordion-header" data-target="ard-content">
+        Análisis comparativo antes y después
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-content" id="ard-content">
+        <p>
+          Muestra la diferencia del paisaje antes y durante la superfloración.
+        </p>
+        <img src="img/antes.jpg" alt="arduino uno" />
+      </div>
+    </section>
+
+    <!-- --------------------- TUBOS ---------------------- -->
+    <section id="tubos">
+      <h2>Extensión y densidad del florecimiento</h2>
+      <p>Presenta las dimensiones del área y la concentración de flores durante el fenómeno.</p>
+
+      <div class="tube-list">
+        <!-- Tubo 20mm -->
+        <div class="tube-item" data-target="tubo20-desc">
+          Medición del área cubierta
+          <span class="arrow">▼</span>
+        </div>
+        <div class="tube-desc" id="tubo20-desc">
+          <p>
+            Lugar en el cual se evidencia la superfloración.
+          </p>
+          <img src="img/mapa.jpg" alt="Tubo PVC 20mm" />
+        </div>
+
+        <!-- Tubo 40mm -->
+        <div class="tube-item" data-target="tubo40-desc">
+          Densidad floral por zona
+          <span class="arrow">▼</span>
+        </div>
+        <div class="tube-desc" id="tubo40-desc">
+          <p>
+            Explica cuántas flores hay por cada superficie del terreno.
+          </p>
+          <img src="img/flores.jpg" alt="Tubo PVC 40mm" />
+        </div>
+
+        <!-- Tubo Silicona -->
+        <div class="tube-item" data-target="tuboflex-desc">
+          Variaciones según el terreno
+          <span class="arrow">▼</span>
+        </div>
+        <div class="tube-desc" id="tuboflex-desc">
+          <p>
+            Muestra cómo el relieve y el tipo de suelo influyen en la cantidad de flores.
+          </p>
+          <img src="img/relieve.jpg"
+            alt="Tubo Silicona" />
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------- NUTRIENTE ---------------------- -->
+    <section id="nutriente">
+      <h2>Nutrientes</h2>
+      <p>
+        Los nutrientes principales que fortalecen las raíces y estimulan la floración.
+      </p>
+      <ul>
+        <li>Nitrógeno (N): favorece el crecimiento de hojas y tallos.</li>
+        <li>Fósforo (P): estimula la formación de flores y raíces.</li>
+        <li>Potasio (K): mejora la resistencia de las plantas y la calidad de las flores.</li>
+        <li>Calcio (Ca) y Magnesio (Mg): ayudan a mantener el equilibrio del suelo y la fotosíntesis.</li>
+      </ul>
+    </section>
+
+    <!-- --------------------- JUEGOS ---------------------- -->
+    <section id="juegos">
+      <h2>Juegos Educativos</h2>
+      <p>Aprende jugando y pon a prueba tus conocimientos con estos recursos:</p>
+
+      <a href="https://es.educaplay.com/recursos-educativos/3874199-hidroponia.html" target="_blank" class="btn-juego"
+        rel="noopener noreferrer">
+        🌱 Educaplay – Cultivo Hidropónico
+      </a>
+
+      <a href="https://www.cerebriti.com/juegos-de-hidroponia/tag/mas-recientes/" target="_blank" class="btn-juego"
+        rel="noopener noreferrer">
+        🌿 Cerebriti – Plantas Hidropónicas
+      </a>
+
+      <a href="https://mobbyt.com/videojuego/educativo/play.php?Id=53505" target="_blank" class="btn-juego"
+        rel="noopener noreferrer">
+        🍃 Mobbyt – Agricultura Hidropónica
+      </a>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       STICKERS DECORATIVOS
+       ========================================================= -->
+  <img src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Planta" class="sticker planta" />
+  <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="Sol" class="sticker sol" />
+  <img src="https://cdn-icons-png.flaticon.com/512/616/616489.png" alt="Mariposa" class="sticker mariposa" />
+  <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Perro" class="sticker perro" />
+  <img src="https://cdn-icons-png.flaticon.com/512/766/766398.png" alt="Hoja" class="sticker hoja" />
+  <img src="https://cdn-icons-png.flaticon.com/512/765/765611.png" alt="Flor" class="sticker flor" />
+
+  <!-- Bichito -->
+  <img id="bichito" src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Bichito videojuego" />
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer>
+    <a href="inicio.html">Inicio</a>
+    <a href="prototipo.html">Prototipo</a>
+    <a href="materiales.html">Materiales</a>
+    <a href="beneficios.html">Beneficios</a>
+    <a href="agrotradicional.html">Agro Tradicional</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="usuarios/perfil.php">Perfil</a>
+  </footer>
+
+  <!-- =========================================================
+       SCRIPTS INTERACTIVOS
+       ========================================================= -->
+  <script>
+    // ACCORDEÓN SENSORES
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const id = header.getAttribute('data-target');
+        const content = document.getElementById(id);
+        const isOpen = content.classList.contains('open');
+
+        // Cerrar otros
+        document.querySelectorAll('.accordion-content.open').forEach(c => c.classList.remove('open'));
+        document.querySelectorAll('.accordion-header.active').forEach(h => h.classList.remove('active'));
+
+        if (!isOpen) {
+          content.classList.add('open');
+          header.classList.add('active');
+        }
+      });
+    });
+
+    // DESPLEGABLE DE TUBOS
+    document.querySelectorAll('.tube-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const id = item.getAttribute('data-target');
+        const desc = document.getElementById(id);
+        const isOpen = desc.classList.contains('open');
+
+        // Cerrar otros
+        document.querySelectorAll('.tube-desc.open').forEach(d => d.classList.remove('open'));
+        document.querySelectorAll('.tube-item.active').forEach(i => i.classList.remove('active'));
+        document.querySelectorAll('.tube-item span.arrow').forEach(a => a.textContent = '▼');
+
+        if (!isOpen) {
+          desc.classList.add('open');
+          item.classList.add('active');
+          item.querySelector('span.arrow').textContent = '▲';
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

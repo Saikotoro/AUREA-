@@ -1,0 +1,337 @@
+/* estilos.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body html {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+/* VIDEO DE FONDO */
+video.bg-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* CONTENEDOR DEL FORMULARIO */
+.form-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.75);
+  padding: 50px 40px;
+  border-radius: 20px;
+  color: #fff;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(0, 255, 174, 0.5);
+}
+
+/* TÍTULO PETRICOR */
+.titulo {
+  font-family: 'Pacifico', cursive;
+  font-size: 3em;
+  color: #2b974f;
+  margin-bottom: 25px;
+  text-shadow: 2px 2px 8px #000;
+}
+
+/* CAMPOS DE FORMULARIO */
+input, select {
+  width: 100%;
+  padding: 14px 16px;
+  margin: 12px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 1em;
+  background: #f0f0f0;
+  color: #333;
+  transition: box-shadow 0.3s ease;
+}
+
+input:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 5px #00ffae;
+}
+
+/* BOTÓN DE ENVIAR */
+input[type="submit"] {
+  background-color: #00c896;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #009b75;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 600px) {
+  .form-container {
+    padding: 30px 20px;
+  }
+
+  .titulo {
+    font-size: 2.2em;
+  }
+}
+/* Animación suave al cargar */
+.form-container {
+  animation: fadeIn 1.5s ease;
+}
+
+/* Animación del título */
+.titulo {
+  animation: slideDown 1.2s ease;
+}
+
+/* Botón con efecto brillante */
+input[type="submit"] {
+  position: relative;
+  overflow: hidden;
+}
+
+input[type="submit"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: skewX(-20deg);
+  transition: 0.75s;
+}
+
+input[type="submit"]:hover::before {
+  left: 125%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+:root {
+  --primary-green: #4caf50;
+  --dark-green: #2e7d32;
+  --light-green: #e8f5e9;
+  --white: #fff;
+  --text: #333;
+  --muted: #666;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--text);
+  background: url('img/hojas-fondo.jpg');
+  background-size: 300px; /* hojitas de fondo */
+}
+
+/* -- Navbar -- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5%;
+  z-index: 1000;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-style: italic;
+  color: var(--dark-green);
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+  transition: color 0.3s;
+}
+.nav-links a:hover {
+  color: var(--primary-green);
+}
+
+/* Burger para móviles */
+.burger { display: none; cursor: pointer; }
+.burger span { display:block; width:25px; height:3px; margin:4px; background:var(--text); transition:0.3s; }
+
+/* -- Hero -- */
+.hero-section {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--white);
+  overflow: hidden;
+}
+.bg-video { position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; }
+.hero-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); z-index:-1; }
+.hero-content { max-width:700px; padding:0 20px; }
+.hero-content h1 { font-family:'Playfair Display',serif; font-size:3em; margin-bottom:10px; }
+.btn-primary { display:inline-block; margin-top:20px; background:var(--primary-green); color:var(--white); padding:12px 30px; border-radius:30px; text-decoration:none; transition:background 0.3s; }
+.btn-primary:hover { background:var(--dark-green); }
+
+/* -- Secciones -- */
+.section-container { padding:100px 5% 80px; max-width:1200px; margin:0 auto; }
+.alt-bg { background: var(--light-green); }
+.section-title { font-family:'Playfair Display',serif; font-size:2.4em; color:var(--dark-green); text-align:center; margin-bottom:40px; }
+
+/* Tarjetas de beneficios / materiales */
+.cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:20px; }
+.card { background:var(--white); border-radius:12px; box-shadow:var(--shadow); padding:25px; text-align:center; transition:transform 0.3s; }
+.card:hover { transform:translateY(-5px); }
+.card i { font-size:2rem; color:var(--primary-green); margin-bottom:10px; }
+
+.benefits-wrap { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; }
+.benefit { background:var(--white); border-radius:12px; box-shadow:var(--shadow); padding:25px 35px; text-align:center; }
+.benefit i { font-size:2.5rem; color:var(--primary-green); }
+
+/* Tabla comparativa */
+.comparison-table { width:100%; border-collapse:collapse; box-shadow:var(--shadow); }
+.comparison-table th, .comparison-table td { padding:15px 10px; border:1px solid #ddd; text-align:center; }
+.comparison-table thead { background:var(--primary-green); color:var(--white); }
+
+/* Footer */
+.footer { background:#222; color:#aaa; text-align:center; padding:25px 5%; }
+
+/* Animaciones */
+.fade-up { animation: fadeUp 1s ease both; }
+@keyframes fadeUp { from {opacity:0; transform:translateY(40px);} to {opacity:1; transform:translateY(0);} }
+
+/* Responsive navbar */
+@media(max-width:768px){
+  .nav-links{position:fixed; top:60px; right:-100%; flex-direction:column; background:rgba(255,255,255,0.95); width:200px; height:calc(100vh-60px); padding:40px 20px; transition:right 0.3s;}
+  .nav-links.show{right:0;}
+  .burger{display:block;}
+}
+
+/* Burger animation */
+.burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);} 
+.burger.active span:nth-child(2){opacity:0;} 
+.burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);} 
+
+/* Floating leaves animation */
+.leaf {
+  position:absolute; width:40px; height:40px; background:url('img/leaf.svg') no-repeat center/contain; animation:floatLeaves linear infinite; opacity:0.7; }
+@keyframes floatLeaves { from {transform:translateY(0) rotate(0deg);} to {transform:translateY(-110vh) rotate(360deg);} }
+
+/* Tipografía y base */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fefefe;
+  color: #333;
+  line-height: 1.6;
+}
+a {
+  color: #2a7f62;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Navbar simple */
+.navbar {
+  background-color: #2a7f62;
+  padding: 10px 0;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+.navbar ul li {
+  margin: 0 15px;
+}
+.navbar ul li a {
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+.navbar ul li a:hover,
+.navbar ul li a.active {
+  background-color: #1b553d;
+}
+footer {
+  background: #0d2336cc;
+  padding: 1.3rem 2rem;
+  display: flex;
+  justify-content: center;   /* centra horizontalmente */
+  align-items: center;
+  flex-wrap: wrap;           /* permite que bajen en varias filas */
+  gap: 1.2rem;               /* separación uniforme */
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  box-shadow: 0 -4px 22px #34eaff88;
+  width: 100%;               /* ocupa todo el ancho */
+  max-width: none;           /* elimina el límite de 980px */
+}
+
+footer .footer-nav a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 600;
+  background: #1a3a52;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+footer .footer-nav a:hover {
+  background: #34eaff;
+  color: #0d2336;
+  box-shadow: 0 0 12px #34eaff88;
+}
+
+

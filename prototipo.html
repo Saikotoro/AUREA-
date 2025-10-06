@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Explorador Satelital ‑ AUREA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+<style>
+  /* --- Reset y base --- */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #0a3d2f;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+    background-size: cover;
+    transition: background 0.7s ease, color 0.7s ease;
+    cursor: url('data:image/svg+xml;utf8,<svg fill="%230a3d2f" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l-5 20h10z"/></svg>') 12 12, auto;
+  }
+  /* Capa oscura para texto visible */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 61, 47, 0.55);
+    pointer-events: none;
+    z-index: 0;
+    transition: background 0.7s ease;
+  }
+  /* Modo noche */
+  body.modo-noche {
+    background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+    background-size: cover;
+    color: #c1f0d6;
+    cursor: url('data:image/svg+xml;utf8,<svg fill="%23c1f0d6" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l-5 20h10z"/></svg>') 12 12, auto;
+  }
+  body.modo-noche::before {
+    background: rgba(0,0,0,0.7);
+  }
+
+  /* NAV */
+  nav {
+    background: rgba(10, 61, 47, 0.85);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    transition: background 0.5s ease;
+  }
+  body.modo-noche nav {
+    background: rgba(2, 25, 15, 0.9);
+  }
+  nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    color: #c2e9fb;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+    position: relative;
+    user-select: none;
+  }
+  nav a:hover,
+  nav a.active {
+    background: #48b78e;
+    color: #fff;
+    box-shadow: 0 0 10px #48b78e;
+    text-shadow: 0 0 10px #48b78e;
+  }
+
+  /* Sombra animada en h1 y h2 */
+  h1, .seccion h2 {
+    text-shadow:
+      0 0 5px #10e987,
+      0 0 10px #095533,
+      0 0 15px #043b27,
+      0 0 20px #046d46;
+    transition: text-shadow 1.5s ease-in-out infinite alternate;
+  }
+
+  /* TITULO */
+  h1 {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 3rem 1rem 2rem;
+    background: linear-gradient(90deg, #105a39, #011812);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulso 3s infinite alternate ease-in-out;
+    user-select: none;
+    position: relative;
+    z-index: 10;
+  }
+  @keyframes pulso {
+    0%, 100% { filter: drop-shadow(0 0 4px #3ecf8e);}
+    50% { filter: drop-shadow(0 0 15px #3ecf8e);}
+  }
+
+  /* CONTENEDOR */
+  .contenedor-prototipo {
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* IMAGEN */
+  .imagen-prototipo {
+    width: 100%;
+    border-radius: 11px;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    animation: aparecer 1.2s ease forwards;
+    opacity: 0;
+    filter: drop-shadow(0 0 8px #48b78e);
+    user-select: none;
+    transition: transform 0.3s ease;
+  }
+  .imagen-prototipo:hover {
+    transform: scale(1.03) rotate(1deg);
+    filter: drop-shadow(0 0 15px #48b78e);
+  }
+  @keyframes aparecer {
+    to {opacity: 1;}
+  }
+
+  /* SECCIONES */
+  .descripcion,
+  .seccion {
+    background: rgba(224, 247, 241, 0.9);
+    border-radius: 25px;
+    padding: 2rem 3rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 10px 25px rgba(0,123,86,0.3);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #0a3d2f;
+    font-weight: 600;
+    text-align: justify;
+    opacity: 0;
+    border: 2px solid #48b78e;
+    position: relative;
+    overflow: hidden;
+    user-select: text;
+    transition: background 0.7s ease, color 0.7s ease, opacity 1s ease, transform 1s ease;
+    transform: translateY(40px);
+    z-index: 10;
+  }
+  body.modo-noche .descripcion,
+  body.modo-noche .seccion {
+    background: rgba(0, 50, 32, 0.85);
+    border-color: #7fe1b3;
+    color: #c1f0d6;
+  }
+  .seccion.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* TITULOS SECCIONES */
+  .seccion h2 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    color: #2f7b56;
+    background: linear-gradient(90deg, #3ecf8e, #0a3d2f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brillar 4s ease-in-out infinite;
+    position: relative;
+    user-select: none;
+    z-index: 10;
+  }
+  @keyframes brillar {
+    0%, 80% {
+      text-shadow: 0 0 10px #3ecf8e, 0 0 20px #3ecf8e;
+    }
+    50% {
+      text-shadow: 0 0 20px #48b78e, 0 0 40px #48b78e;
+    }
+  }
+  .seccion h2::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 5px;
+    background: #48b78e;
+    margin: 6px auto 0;
+    border-radius: 2px;
+  }
+  body.modo-noche .seccion h2 {
+    color: #88d9aa;
+    background: linear-gradient(90deg, #7ee5a8, #2f7b56);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* VENTAJAS - TARJETAS */
+  .ventajas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    z-index: 10;
+  }
+  .ventaja {
+    background: linear-gradient(135deg, #7ae582, #34d399);
+    border-radius: 25px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: #043927;
+    box-shadow: 0 8px 15px rgba(56, 161, 105, 0.4);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: transform .3s ease, box-shadow .3s ease, filter .3s ease;
+    user-select: none;
+  }
+  .ventaja i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #045d30;
+    transition: transform .3s ease, color .3s ease;
+    filter: drop-shadow(0 0 5px #0a3d2f);
+  }
+  .ventaja h3 {
+    font-size: 1.4rem;
+    margin: 0 0 .8rem;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .ventaja p {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 600;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  }
+  .ventaja:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(56, 161, 105, 0.7);
+    filter: saturate(1.1);
+  }
+  .ventaja:hover i {
+    color: #0a3d2f;
+    transform: rotate(-10deg) scale(1.2);
+    filter: drop-shadow(0 0 12px #14532d);
+  }
+
+  /* BOTONES NAV */
+  .botones-nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    z-index: 10;
+  }
+  .boton {
+    background: #48b78e;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    border-radius: 40px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 6px 15px rgba(72,183,142,.6);
+    transition: background .4s, transform .3s, box-shadow .4s;
+    position: relative;
+    user-select: none;
+  }
+  .boton::before {
+    content: attr(title);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 61, 47, 0.85);
+    color: #c2e9fb;
+    padding: 4px 10px;
+    border-radius: 10px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    user-select: none;
+    box-shadow: 0 0 8px #48b78e;
+  }
+  .boton:hover::before {
+    opacity: 1;
+  }
+  .boton:hover {
+    background: #2f7b5a;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #34d399;
+  }
+
+  /* BURBUJAS FLOTANTES */
+  .burbujas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .burbuja {
+    position: absolute;
+    bottom: -100px;
+    background: radial-gradient(circle at center, rgba(56,161,105,0.4), transparent 70%);
+    border-radius: 50%;
+    animation: subir 20s infinite ease-in;
+    filter: drop-shadow(0 0 6px #2f7b5a);
+    opacity: 0.6;
+  }
+  .burbuja:nth-child(1) {left: 5%; width: 35px; height: 35px; animation-delay: 0s; animation-duration: 22s;}
+  .burbuja:nth-child(2) {left: 15%; width: 50px; height: 50px; animation-delay: 4s; animation-duration: 18s;}
+  .burbuja:nth-child(3) {left: 30%; width: 28px; height: 28px; animation-delay: 6s; animation-duration: 20s;}
+  .burbuja:nth-child(4) {left: 50%; width: 60px; height: 60px; animation-delay: 9s; animation-duration: 24s;}
+  .burbuja:nth-child(5) {left: 70%; width: 40px; height: 40px; animation-delay: 13s; animation-duration: 19s;}
+  .burbuja:nth-child(6) {left: 90%; width: 55px; height: 55px; animation-delay: 16s; animation-duration: 21s;}
+  @keyframes subir {
+    0% {transform: translateY(0) scale(0.9); opacity: 0;}
+    30% {opacity: 0.7;}
+    100% {transform: translateY(-130vh) scale(1.3); opacity: 0;}
+  }
+
+  /* HOJAS FLOTANTES */
+  .hojas-container {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: visible;
+  }
+  .hoja {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    opacity: 0.35;
+    filter: drop-shadow(0 0 3px #34d399);
+    animation-name: caer, girar, pulsoHoja;
+    animation-timing-function: linear, linear, ease-in-out;
+    animation-iteration-count: infinite;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    user-select: none;
+  }
+  @keyframes caer {
+    0% { transform: translateY(-50px); opacity: 0; }
+    10% { opacity: 0.5; }
+    100% { transform: translateY(110vh); opacity: 0; }
+  }
+  @keyframes girar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes pulsoHoja {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+  .hoja:nth-child(1) {
+    left: 10%;
+    animation-duration: 22s, 18s, 4s;
+    animation-delay: 0s, 0s, 0s;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="green" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C7.86 3.09 4.68 6.92 5 11c.16 2.44 2.48 4.69 5 5 3.31.44 5.5-1.31 6-3 1.1-3.69-1.6-7.77-4-11z"/></svg>');
+  }
+  .hoja:nth-child(2) {
+    left: 25%;
+    width: 50px;
+    height: 50px;
+    animation-duration: 28s, 22s, 5s;
+    animation-delay: 4s, 4s, 1s;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%230a3d2f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 2C9 7 6 14 7 21c.5 6 8 8 10 4 3-6 3-17-1-23z"/></svg>');
+  }
+  .hoja:nth-child(3) {
+    left: 40%;
+    animation-duration: 25s, 20s, 6s;
+    animation-delay: 1s, 2s, 3s;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="forestgreen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 2c-3 3-3 5-3 7 0 4 6 7 8 7 3 0 3-3 3-5 0-4-4-6-8-9z"/></svg>');
+  }
+  .hoja:nth-child(4) {
+    left: 60%;
+    width: 55px;
+    height: 55px;
+    animation-duration: 20s, 15s, 7s;
+    animation-delay: 2s, 0s, 0s;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%230a3d2f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 2C9 7 6 14 7 21c.5 6 8 8 10 4 3-6 3-17-1-23z"/></svg>');
+  }
+  .hoja:nth-child(5) {
+    left: 80%;
+    animation-duration: 27s, 23s, 5s;
+    animation-delay: 5s, 5s, 3s;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="darkgreen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 3c-4 4-4 8-3 11 2 7 10 7 12 4 1-3-1-9-3-13z"/></svg>');
+  }
+
+  /* MARIPOSAS FLOTANTES */
+  .mariposas-container {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: visible;
+  }
+  .mariposa {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    opacity: 0.85;
+    animation-name: vuelo, girarMariposa, escalaMariposa;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    filter: drop-shadow(0 0 6px #34d399);
+    user-select: none;
+    cursor: default;
+  }
+  @keyframes vuelo {
+    0%, 100% {
+      transform: translateY(0);
+      opacity: 0.85;
+    }
+    50% {
+      transform: translateY(-15px);
+      opacity: 1;
+    }
+  }
+  @keyframes girarMariposa {
+    0% { transform: rotate(0deg);}
+    50% { transform: rotate(10deg);}
+    100% { transform: rotate(0deg);}
+  }
+  @keyframes escalaMariposa {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+  .mariposa:nth-child(1) {
+    top: 15%;
+    left: 12%;
+    animation-duration: 8s, 4s, 5s;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 4c-7 8-10 16-10 26 0 12 10 22 14 22s14-10 14-22c0-10-3-18-10-26z"/></svg>');
+  }
+  .mariposa:nth-child(2) {
+    top: 40%;
+    left: 25%;
+    animation-duration: 10s, 5s, 6s;
+    animation-delay: 2s, 3s, 1s;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="deepskyblue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 6c-6 7-12 15-12 24 0 11 9 21 14 21s14-10 14-21c0-9-6-17-16-24z"/></svg>');
+  }
+  .mariposa:nth-child(3) {
+    top: 55%;
+    left: 65%;
+    animation-duration: 12s, 6s, 7s;
+    animation-delay: 5s, 1s, 2s;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="orchid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M30 5c-5 8-10 15-10 24 0 12 12 20 16 20s14-10 14-20c0-9-5-19-20-24z"/></svg>');
+  }
+  .mariposa:nth-child(4) {
+    top: 20%;
+    left: 80%;
+    animation-duration: 9s, 7s, 6s;
+    animation-delay: 1s, 0s, 3s;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="hotpink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 7c-6 7-11 14-11 23 0 10 11 21 15 21s15-11 15-21c0-9-5-19-19-23z"/></svg>');
+  }
+
+  /* Gotas cayendo */
+  .gotas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .gota {
+    position: absolute;
+    width: 10px;
+    height: 22px;
+    background: rgba(56,161,105,0.7);
+    border-radius: 50% / 60%;
+    filter: drop-shadow(0 0 6px #2f7b5a);
+    animation-name: caerGota;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes caerGota {
+    0% {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateY(110vh);
+      opacity: 0;
+    }
+  }
+  /* Varias gotas con delays y posiciones random */
+  .gota:nth-child(1) {left: 10%; animation-duration: 18s; animation-delay: 0s;}
+  .gota:nth-child(2) {left: 15%; animation-duration: 22s; animation-delay: 6s;}
+  .gota:nth-child(3) {left: 30%; animation-duration: 20s; animation-delay: 4s;}
+  .gota:nth-child(4) {left: 45%; animation-duration: 19s; animation-delay: 10s;}
+  .gota:nth-child(5) {left: 50%; animation-duration: 25s; animation-delay: 14s;}
+  .gota:nth-child(6) {left: 70%; animation-duration: 18s; animation-delay: 2s;}
+  .gota:nth-child(7) {left: 85%; animation-duration: 22s; animation-delay: 8s;}
+  .gota:nth-child(8) {left: 90%; animation-duration: 20s; animation-delay: 3s;}
+
+  /* Botón modo noche */
+  .modo-noche-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: #48b78e;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #48b78e;
+    transition: background 0.3s ease;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    animation: brilloBoton 3s ease-in-out infinite alternate;
+  }
+  @keyframes brilloBoton {
+    0%, 100% {
+      box-shadow: 0 0 10px #48b78e;
+    }
+    50% {
+      box-shadow: 0 0 18px #34d399;
+    }
+  }
+  .modo-noche-btn:hover {
+    background: #2f7b5a;
+  }
+  .modo-noche-btn i {
+    color: white;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+  .modo-noche-btn.modo-activado {
+    background: #c1f0d6;
+    box-shadow: 0 0 12px #c1f0d6;
+    animation: brilloBotonNoche 3s ease-in-out infinite alternate;
+  }
+  @keyframes brilloBotonNoche {
+    0%, 100% {
+      box-shadow: 0 0 12px #c1f0d6;
+    }
+    50% {
+      box-shadow: 0 0 20px #88d9aa;
+    }
+  }
+  .modo-noche-btn.modo-activado i {
+    color: #2f7b5a;
+    transform: rotate(180deg);
+  }
+
+  /* Efecto glow en enlaces y botones */
+  nav a:hover,
+  .boton:hover {
+    text-shadow: 0 0 10px #48b78e;
+    box-shadow: 0 0 20px #48b78e;
+  }
+
+  /* Cursor personalizado cuando está en el body */
+  body,
+  nav,
+  .contenedor-prototipo,
+  .botones-nav {
+    cursor: url('data:image/svg+xml;utf8,<svg fill="%230a3d2f" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l-5 20h10z"/></svg>') 12 12, auto;
+  }
+  body.modo-noche,
+  body.modo-noche nav,
+  body.modo-noche .contenedor-prototipo,
+  body.modo-noche .botones-nav {
+    cursor: url('data:image/svg+xml;utf8,<svg fill="%23c1f0d6" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l-5 20h10z"/></svg>') 12 12, auto;
+  }
+
+  /* Tooltip en botones nav */
+  .boton[title] {
+    position: relative;
+  }
+  .boton[title]:hover::before {
+    opacity: 1;
+  }
+
+  /* Animación de fade + slide para secciones (al hacer scroll) */
+  .seccion {
+    will-change: transform, opacity;
+  }
+  /* Título principal mejorado */
+.titulo-prototipo {
+  text-align: center;
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin: 3rem 1rem 1rem;
+  background: linear-gradient(90deg, #a3f7bf, #0a3d2f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: zoomin 2s ease forwards;
+  position: relative;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(72, 183, 142, 0.6);
+  user-select: none;
+}
+
+/* Animación de entrada */
+@keyframes zoomin {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Emoji animado */
+.titulo-prototipo .emoji {
+  display: inline-block;
+  animation: brillarEmoji 2s infinite ease-in-out alternate;
+  filter: drop-shadow(0 0 6px #48b78e);
+  font-size: 1.3em;
+  margin-right: 0.4rem;
+}
+@keyframes brillarEmoji {
+  0% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 4px #3ecf8e);
+  }
+  100% {
+    transform: rotate(10deg) scale(1.15);
+    filter: drop-shadow(0 0 15px #3ecf8e);
+  }
+}
+
+/* Flechita decorativa animada */
+.flecha-decorativa {
+  font-size: 2rem;
+  color: #48b78e;
+  text-shadow: 0 0 10px #34d399;
+  animation: saltarFlecha 2s infinite ease-in-out;
+  margin-top: 0.5rem;
+}
+@keyframes saltarFlecha {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+
+</style>
+
+</head>
+<body>
+
+<nav>
+  <ul>
+    <li><a href="inicio.html">Inicio</a></li>
+    <li><a href="prototipo.html" class="active">Explorador Satelital</a></li>
+    <li><a href="materiales.html">Indices vegetativos</a></li>
+    <li><a href="beneficios.html">Cambio Global</a></li>
+    <li><a href="agrotradicional.html">Interactua</a></li>
+    <li><a href="nosotros.html">Evidencia</a></li>
+    <li><a href="usuarios/perfil.php">Nosotros</a></li>
+  </ul>
+</nav>
+
+<h1>🔧 SUPERBLOOM </h1>
+
+<div class="contenedor-prototipo">
+  <img src="img/super.jpg" alt="Imagen del prototipo" class="imagen-prototipo" />
+
+  <section class="seccion">
+    <h2>¿QUE SON LOS INDICES DE VEGETACION?</h2>
+    <p>
+      Los índices de vegetación miden la cantidad de vegetación verde en un área determinada y pueden utilizarse para evaluar la salud de la vegetación. Los satélites de observación terrestre de la NASA recopilan diversos índices de vegetación, entre ellos el Índice de Vegetación de Diferencia Normalizada ( NDVI ), el Índice de Vegetación Mejorado ( EVI ), el Índice de Área Foliar ( LAI ) y la Fracción de Radiación Fotosintéticamente Activa (FPAR)
+    </p>
+    <p>
+      Los valores del NDVI varían de -1 a 1 y representan la diferencia entre la reflectancia del infrarrojo cercano (NIR) y la reflectancia roja dividida por su suma. Los valores bajos de NDVI generalmente corresponden a zonas áridas de roca, arena, suelos expuestos o nieve, mientras que los valores altos de NDVI indican vegetación más verde, como bosques, tierras de cultivo y humedales. El EVI es similar al NDVI, pero minimiza las variaciones entre el dosel y el suelo y mejora la sensibilidad en condiciones de vegetación densa.
+    </p>
+  </section>
+
+  <section class="seccion">
+    <h2>IMPACTO Y DESAFIOS</h2>
+    <p>
+     Impacto positivo: La superfloración atrae a un gran número de turistas y aumenta la conciencia pública sobre la diversidad floral de la región.
+Impacto negativo: La afluencia masiva de visitantes puede dañar el ecosistema si las personas se salen de los senderos, pisoteando las delicadas plantas y el suelo. 
+    </p>
+    <p>
+      En 2019, la popularidad del fenómeno en California obligó a cerrar el acceso al Cañón de Walker para proteger el área de las multitudes.
+    </p>
+  </section>
+
+  <section class="seccion">
+    <h2>BENEFICIOS DE LA SUPER FLORACION</h2>
+
+    <div class="ventajas-grid">
+      <article class="ventaja" title="Maximiza la producción con precisión">
+        <i class="fas fa-chart-line"></i>
+        <h3>ALIMENTO ABUNDANTE</h3>
+        <p>El repentino florecimiento de un superbloom proporciona una fuente masiva de néctar y polen para polinizadores como abejas y mariposas.
+      </article>
+
+      <article class="ventaja" title="Minimiza consumo de recursos">
+        <i class="fas fa-tint"></i>
+        <h3>REVITALIZACION DEL ECOSISTEMA</h3>
+        <p>Después de años de sequía, la lluvia necesaria para un superbloom repone los recursos hídricos en el suelo.
+      </article>
+
+      <article class="ventaja" title="Reduce impacto ambiental">
+        <i class="fas fa-leaf"></i>
+        <h3>RESILIENCIA DIGITAL</h3>
+        <p>Las superfloraciones son un mecanismo de supervivencia para las plantas que viven en climas extremos.
+      </article>
+
+      <article class="ventaja" title="Fácil y accesible para todos">
+        <i class="fas fa-users"></i>
+        <h3>CONSCIENCIA PUBLICA</h3>
+        <p>La belleza de un superbloom atrae a numerosos visitantes y genera conciencia sobre la fragilidad y la importancia de los ecosistemas del desierto.
+      </article>
+    </div>
+  </section>
+
+  <div class="botones-nav">
+    <a href="inicio.html" class="boton" title="Volver a la página de inicio">Volver a Inicio</a>
+    <a href="materiales.html" class="boton" title="Ver página de indices vegetativos">Ver Indices Vegetativos</a>
+  </div>
+</div>
+
+<!-- BURBUJAS FLOTANTES -->
+<div class="burbujas" aria-hidden="true">
+  <span class="burbuja"></span>
+  <span class="burbuja"></span>
+  <span class="burbuja"></span>
+  <span class="burbuja"></span>
+  <span class="burbuja"></span>
+  <span class="burbuja"></span>
+</div>
+
+<!-- HOJAS FLOTANTES -->
+<div class="hojas-container" aria-hidden="true">
+  <div class="hoja"></div>
+  <div class="hoja"></div>
+  <div class="hoja"></div>
+  <div class="hoja"></div>
+  <div class="hoja"></div>
+</div>
+
+<!-- MARIPOSAS FLOTANTES -->
+<div class="mariposas-container" aria-hidden="true">
+  <div class="mariposa"></div>
+  <div class="mariposa"></div>
+  <div class="mariposa"></div>
+  <div class="mariposa"></div>
+</div>
+
+<!-- GOTAS CAYENDO -->
+<div class="gotas" aria-hidden="true">
+  <div class="gota"></div>
+  <div class="gota"></div>
+  <div class="gota"></div>
+  <div class="gota"></div>
+  <div class="gota"></div>
+  <div class="gota"></div>
+  <div class="gota"></div>
+  <div class="gota"></div>
+</div>
+
+<!-- Botón modo noche -->
+<button class="modo-noche-btn" title="Cambiar modo noche" aria-label="Cambiar modo noche">
+  <i class="fas fa-moon"></i>
+</button>
+
+<script>
+  // Detectar secciones para animar al hacer scroll
+  const secciones = document.querySelectorAll('.seccion');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.3
+  });
+  secciones.forEach(sec => observer.observe(sec));
+
+  // Botón modo noche
+  const btnModoNoche = document.querySelector('.modo-noche-btn');
+  btnModoNoche.addEventListener('click', () => {
+    document.body.classList.toggle('modo-noche');
+    btnModoNoche.classList.toggle('modo-activado');
+
+    // Cambiar icono
+    if(document.body.classList.contains('modo-noche')){
+      btnModoNoche.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+      btnModoNoche.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+  });
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+

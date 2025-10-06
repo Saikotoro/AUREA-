@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tipos de Hidroponía - PETRICOR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Overlay oscuro  */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.45);
+      pointer-events: none;
+      z-index: 0;
+    }
+    h1 {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 3rem;
+      color: #d4f7e2;
+      text-shadow: 2px 2px 8px #000;
+      position: relative;
+      z-index: 2;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem 20px 40px;
+      position: relative;
+      z-index: 2;
+      background: rgba(0,0,0,0.35);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      backdrop-filter: blur(6px);
+      color: #c9f7d4;
+    }
+    .tipo {
+      margin-bottom: 2rem;
+      background: rgba(25, 75, 50, 0.7);
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+      transition: transform 0.3s ease;
+    }
+    .tipo:hover {
+      transform: scale(1.04);
+      box-shadow: 0 10px 35px rgba(0,255,150,0.8);
+    }
+    .tipo h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.6rem;
+      color: #adf3b6;
+      text-shadow: 1px 1px 4px #000;
+    }
+    .tipo p, .tipo ul, .tipo a {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #d0f4d1;
+      text-shadow: 1px 1px 3px #000;
+    }
+    .tipo ul {
+      padding-left: 1.2rem;
+    }
+    .tipo ul li::before {
+      content: "🍃 ";
+    }
+    a {
+      color: #a2e3b6;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    a:hover {
+      color: #7ed77e;
+      text-decoration: underline;
+    }
+    .imagen-cool {
+      text-align: center;
+      margin: 2rem 0;
+      position: relative;
+      z-index: 2;
+    }
+    .imagen-cool img {
+      width: 80%;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.9);
+      filter: drop-shadow(0 0 10px #7bf1a8);
+      transition: transform 0.5s ease;
+    }
+    .imagen-cool img:hover {
+      transform: scale(1.05);
+    }
+    .final {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: #b6f2c6;
+      text-shadow: 1px 1px 4px #000;
+      position: relative;
+      z-index: 2;
+    }
+    .volver {
+      text-align: center;
+      margin: 2rem 0;
+      position: relative;
+      z-index: 2;
+    }
+    .volver a {
+      display: inline-block;
+      background: #2a6f42;
+      color: #daf0d7;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      box-shadow: 0 4px 15px #24904bcc;
+      transition: background 0.3s ease;
+      text-shadow: 1px 1px 3px #145117;
+    }
+    .volver a:hover {
+      background: #4caf50;
+      box-shadow: 0 6px 20px #4caf5066;
+    }
+
+    /* Burbujas animadas */
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+      opacity: 0.6;
+      filter: drop-shadow(0 0 4px rgba(255,255,255,0.3));
+      z-index: 1;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      100% { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+    }
+    .bubble:nth-child(1) { width: 40px; height: 40px; left: 5%; animation-duration: 22s; animation-delay: 0s;}
+    .bubble:nth-child(2) { width: 25px; height: 25px; left: 15%; animation-duration: 18s; animation-delay: 4s;}
+    .bubble:nth-child(3) { width: 50px; height: 50px; left: 35%; animation-duration: 25s; animation-delay: 2s;}
+    .bubble:nth-child(4) { width: 30px; height: 30px; left: 55%; animation-duration: 20s; animation-delay: 6s;}
+    .bubble:nth-child(5) { width: 45px; height: 45px; left: 75%; animation-duration: 23s; animation-delay: 1s;}
+    .bubble:nth-child(6) { width: 20px; height: 20px; left: 85%; animation-duration: 17s; animation-delay: 3s;}
+
+    .hojas-cayendo {
+  position: fixed;
+  width: 180px;
+  animation: caer-hojas 10s linear infinite;
+  pointer-events: none; /*  no interfieran con clicks */
+  user-select: none;
+}
+
+/*  posiciones diferentes para que caigan en distintos lugares */
+.hojas-cayendo:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+}
+.hojas-cayendo:nth-child(2) {
+  left: 30%;
+  animation-delay: 3s;
+}
+.hojas-cayendo:nth-child(3) {
+  left: 50%;
+  animation-delay: 6s;
+}
+.hojas-cayendo:nth-child(4) {
+  left: 70%;
+  animation-delay: 9s;
+}
+
+@keyframes caer-hojas {
+  0% {
+    top: -100px;
+    opacity: 1;
+  }
+  100% {
+    top: 100vh;
+    opacity: 0;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Burbujas animadas -->
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+
+  <<!-- Hojas cayendo con GIF -->
+<img src="img/hojas-cayendo.webp" class="hojas-cayendo" alt="Hojas cayendo animadas" />
+<img src="img/hojas-cayendo.webp" class="hojas-cayendo" alt="Hojas cayendo animadas" />
+<img src="img/hojas-cayendo.webp" class="hojas-cayendo" alt="Hojas cayendo animadas" />
+<img src="img/hojas-cayendo.webp" class="hojas-cayendo" alt="Hojas cayendo animadas" />
+
+
+  <h1>Tipos de Hidroponía</h1>
+  <div class="container">
+
+    <div class="tipo">
+      <h2>Raíz Flotante (DWC)</h2>
+      <p>Las raíces se sumergen en una tina con solución nutritiva oxigenada, sostenidas por placas flotantes. Perfecto para lechugas o acelgas, es fácil de construir y mantiene un crecimiento eficiente.</p>
+      <ul>
+        <li>Fácil montaje (tanque + bomba de aire)</li>
+        <li>Requiere monitoreo de temperatura y oxígeno</li>
+        <li>Riesgo de algas si no se cubre la superficie</li>
+      </ul>
+      <p>Más info: <a href="https://en.wikipedia.org/wiki/Deep_water_culture" target="_blank">Wikipedia (DWC)</a>, y guía paso a paso en <a href="https://www.epicgardening.com/deep-water-culture/" target="_blank">Epic Gardening</a>.</p>
+    </div>
+
+    <div class="tipo">
+      <h2>NFT – Nutrient Film Technique</h2>
+      <p>Una película delgada de solución nutritiva fluye continuamente por tubos, alimentando las raíces que cuelgan en su interior. Muy usado para cultivos de hoja y fresas.</p>
+      <ul>
+        <li>Eficiente uso de agua y nutrientes</li>
+        <li>Sensible a cortes de energía</li>
+        <li>Requiere control del flujo y oxigenación del canal</li>
+      </ul>
+      <p>Descubre su historia: <a href="https://en.wikipedia.org/wiki/Nutrient_film_technique" target="_blank">Wikipedia (NFT)</a> y guía profesional en <a href="https://www.maximumyield.com/definition/346/nutrient-film-technique-nft" target="_blank">Maximum Yield</a>.</p>
+    </div>
+
+    <div class="tipo">
+      <h2>Aeroponía</h2>
+      <p>Las raíces crecen en aire y reciben una niebla de nutrientes de forma periódica. Alta eficiencia hídrica (hasta 98 %) y crecimiento acelerado, ideal para producción vertical.</p>
+      <ul>
+        <li>Consumo mínimo de agua</li>
+        <li>Crecimiento 3‑4× más rápido</li>
+        <li>Costo y mantenimiento elevado</li>
+      </ul>
+      <p>Aprende más en <a href="https://es.wikipedia.org/wiki/Aeropon%C3%ADa" target="_blank">Wikipedia</a>, y guías prácticas en <a href="https://www.verticalfarmdaily.com/aeroponics" target="_blank">Vertical Farm Daily</a>.</p>
+    </div>
+
+    <div class="tipo">
+      <h2>Sustratos (Goteo, Ebb & Flow, Mecha)</h2>
+      <p>Estos sistemas usan medios como perlita, coco o lana de roca, combinados con riego automático o manual.</p>
+      <ul>
+        <li><strong>Goteo:</strong> precisión en riego, ideal para cultivos frutales</li>
+        <li><strong>Ebb & Flow:</strong> ciclos de inundación que airean raíces</li>
+        <li><strong>Mecha:</strong> sin bombas, ideal para principiantes o espacios pequeños</li>
+      </ul>
+      <p>Investiga: <a href="https://www.epicgardening.com/hydroponic-grow-media/" target="_blank">Mejores sustratos (Epic Gardening)</a>, y tutoriales en <a href="https://www.growveg.com/growguide/hydroponics/" target="_blank">GrowVeg</a>.</p>
+    </div>
+
+    <div class="tipo">
+      <h2>Técnica Kratky</h2>
+      <p>Un sistema pasivo donde las plantas crecen en agua estancada con nutrientes. No requiere electricidad. Simple y efectiva para cultivos caseros.</p>
+      <ul>
+        <li>Sistema cero consumo energético</li>
+        <li>No necesita mantenimiento constante</li>
+        <li>Limitado en plantas exigentes</li>
+      </ul>
+      <p>Guía de inicio en <a href="https://growfoodguide.com/the-kratky-method/" target="_blank">Grow Food Guide</a> y ejemplos en <a href="https://www.agroworld.es/kratky" target="_blank">AgroWorld</a>.</p>
+    </div>
+
+    <div class="tipo">
+      <h2>Sistemas curiosos y mixtos</h2>
+      <p>Existen mezclas como:</p>
+      <ul>
+        <li><strong>Vertical stacking:</strong> uso de tubos y luces LED para ahorrar espacio</li>
+        <li><strong>Acuaponía:</strong> plantas + peces, sistema circular autosostentable</li>
+        <li><strong>Reciclaje tubular:</strong> usando botellas o PVC como estructuras reutilizadas</li>
+      </ul>
+      <p>Proyectos inspiradores en <a href="https://www.instructables.com/vertical-hydroponic-garden/" target="_blank">Instructables</a> y <a href="https://www.hydroponics.net.au/" target="_blank">Hydroponics Australia</a>.</p>
+    </div>
+
+    <div class="imagen-cool">
+      <img src="img/Sistemas-hidroponicos-1.gif" alt="Ilustración creativa de sistemas hidropónicos">
+    </div>
+
+    <p class="final">💫 Conecta la innovación con la tierra. ¡Disfruta este viaje verde y tecnológico! 💫</p>
+
+    <div class="volver">
+      <a href="inicio.html">🔙 Volver al inicio</a>
+    </div>
+
+  </div>
+
+</body>
+</html>

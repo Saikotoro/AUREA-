@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inicio ‑ AUREA</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+      color: #0a3d2f;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ---------- DECORACIÓN: GOTAS DE LLUVIA ---------- */
+    .gota {
+      position: absolute;
+      width: 2px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      animation: lluvia linear infinite;
+      opacity: 0.7;
+      z-index: 2;
+      pointer-events: none;
+    }
+    @keyframes lluvia {
+      0% {transform: translateY(-100px); opacity: 1;}
+      100% {transform: translateY(100vh); opacity: 0;}
+    }
+
+    /* ---------- NAVBAR ---------- */
+    nav {
+      background: #0a3d2f;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 2px 12px rgba(10, 61, 47, 0.2);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: #c2e9fb;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      padding: .25rem .5rem;
+      border-radius: 6px;
+      transition: background .3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background: #48b78e;
+      color: #fff
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      padding: 0 1rem;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+      position: relative;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .7);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 61, 47, .6);
+      z-index: 0
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      animation: fadeInUp 1.4s cubic-bezier(.47,1.64,.41,.8);
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+      animation: fadeInDown 1.2s;
+    }
+
+    .hero p {
+      font-size: 1.7rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      animation: fadeInUp 1.6s;
+    }
+
+    .btn {
+      background: linear-gradient(90deg,#48b78e,#2f7b5a);
+      color: #fff;
+      padding: 1rem 2.5rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 6px 15px rgba(72, 183, 142, .6);
+      transition: background .3s, transform .2s;
+      animation: fadeInUp 2s;
+    }
+
+    .btn:hover {
+      background: #2f7b5a;
+      transform: scale(1.07);
+    }
+
+    /* ---------- ANIMACIONES KEYFRAMES ---------- */
+    @keyframes fadeInUp {
+      0% {opacity:0; transform:translateY(30px);}
+      100% {opacity:1; transform:translateY(0);}
+    }
+    @keyframes fadeInDown {
+      0% {opacity:0; transform:translateY(-30px);}
+      100% {opacity:1; transform:translateY(0);}
+    }
+    @keyframes pulso {
+      0%,100% {box-shadow:0 4px 15px rgba(0,0,0,0.4); transform:translate(-50%,-50%) scale(1);}
+      50% {box-shadow:0 8px 25px rgba(0,0,0,0.6); transform:translate(-50%,-50%) scale(1.1);}
+    }
+    @keyframes crecer {
+      0% {transform:scale(1);}
+      50% {transform:scale(1.08);}
+      100% {transform:scale(1);}
+    }
+
+    /* ---------- CARRUSEL ---------- */
+    .carrusel-container {
+      max-width: 1100px;
+      margin: 4rem auto;
+      padding: 0 1rem
+    }
+
+    .carrusel-container h2 {
+      text-align: center;
+      font-weight: 800;
+      font-size: 2.8rem;
+      margin-bottom: 2.5rem;
+      color: #0a3d2f;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px #c2e9fb80;
+    }
+
+    .slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, .15)
+    }
+
+    .slides {
+      display: flex;
+      transition: transform .6s cubic-bezier(.47,1.64,.41,.8), opacity .7s;
+    }
+
+    .slide {
+      min-width: 100%;
+      padding: 2rem 3rem;
+      background: #fff;
+      color: #0a3d2f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 25px;
+      box-shadow: 0 2px 10px #a1c4fd40;
+      animation: fadeInUp 1.2s;
+    }
+
+    .slide img {
+      width: 100%;
+      max-width: 450px;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(10, 61, 47, .3);
+      margin-bottom: 1.8rem;
+      border: 4px solid #e0f7f3;
+      background: #e0f7f3;
+    }
+
+    .slide h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem
+    }
+
+    .slide p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      max-width: 700px;
+      text-align: center
+    }
+
+    .btn-leer {
+      background: #48b78e;
+      color: #fff;
+      padding: .85rem 2rem;
+      border-radius: 40px;
+      font-weight: 700;
+      box-shadow: 0 6px 15px rgba(72, 183, 142, .6);
+      transition: background .3s;
+      text-decoration: none;
+    }
+
+    .btn-leer:hover {
+      background: #2f7b5a;
+      transform: scale(1.07);
+    }
+
+    .controles {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .controles button {
+      background: rgba(72, 183, 142, .8);
+      border: none;
+      color: #fff;
+      font-size: 2.5rem;
+      padding: 0 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+      pointer-events: all;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
+      transition: background .3s;
+    }
+
+    .controles button:hover {
+      background: #2f7b5a
+    }
+
+    /* ---------- VIDEO ---------- */
+    #video-hidroponia {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+      text-align: center;
+      position: relative
+    }
+
+    #video-hidroponia .player-wrapper {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .15)
+    }
+
+    #videoHidroponia {
+      width: 100%;
+      display: block;
+      border-radius: 20px
+    }
+
+    #btnPlayVideo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(10, 61, 47, .9);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 90px;
+      height: 90px;
+      font-size: 2.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .4);
+      transition: transform .3s, box-shadow .3s;
+      animation: pulso 2.5s infinite;
+    }
+
+    #btnPlayVideo:hover {
+      transform: translate(-50%, -50%) scale(1.15);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, .5)
+    }
+
+    #textoOverlay {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+      color: #fff;
+      font-weight: 600;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .5);
+      z-index: 10;
+      pointer-events: none;
+      transition: opacity .3s;
+    }
+
+    /* ---------- QUÉ ES ---------- */
+    #que-es {
+      background: #d1f0ec;
+      padding: 3rem 1rem;
+      border-radius: 20px;
+      max-width: 900px;
+      margin: 0 auto 5rem;
+      box-shadow: 0 8px 30px rgba(10, 61, 47, .1)
+    }
+
+    #que-es h2 {
+      font-weight: 800;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem
+    }
+
+    #que-es p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      font-weight: 600;
+      color: #2f7b5a
+    }
+
+    /* ---------- ELIGE SISTEMA ---------- */
+    #elige-sistema {
+      background: linear-gradient(135deg, #e0f7f3, #d1f0ec);
+      padding: 4rem 1rem
+    }
+
+    #elige-sistema h2 {
+      text-align: center;
+      font-weight: 800;
+      font-size: 2.8rem;
+      margin-bottom: 3rem
+    }
+
+    .cuadros-sistema {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 960px;
+      margin: 0 auto
+    }
+
+    .cuadro {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(10, 61, 47, .15);
+      padding: 2rem 1.5rem;
+      width: 160px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform .4s cubic-bezier(.47, 1.64, .41, .8), box-shadow .4s;
+      animation: crecer 2.5s infinite;
+      position: relative;
+    }
+
+    .cuadro:hover {
+      transform: scale(1.1) rotate(2deg);
+      box-shadow: 0 15px 30px rgba(42, 127, 98, .5)
+    }
+
+    .cuadro h3 {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin: .5rem 0;
+      color: #0a3d2f
+    }
+
+    .cuadro p {
+      font-size: .95rem;
+      text-align: center;
+      color: #2f7b5a
+    }
+
+    /* ---------- ICONOS DECORATIVOS ---------- */
+    .icono-planta {
+      position: absolute;
+      top: -30px;
+      left: -20px;
+      font-size: 2.2rem;
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 1;
+      animation: crecer 3s infinite;
+    }
+    .icono-sol {
+      position: absolute;
+      top: -35px;
+      right: -15px;
+      font-size: 2.5rem;
+      color: #ffeb3b;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 1;
+      animation: pulso 2.5s infinite;
+    }
+
+    /* ---------- AUDIO ---------- */
+    .audio-box {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(10, 61, 47, .8);
+      padding: .5rem 1rem;
+      border-radius: 40px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .audio-box audio {
+      width: 180px;
+      filter: invert(1)
+    }
+    .audio-btn {
+      background: #48b78e;
+      border: none;
+      color: #fff;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      cursor: pointer;
+      margin-left: 6px;
+      box-shadow: 0 2px 8px #48b78e80;
+      transition: background .3s;
+    }
+    .audio-btn:hover {
+      background: #2f7b5a;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media(max-width:1024px) {
+      .hero h1 {font-size: 2.8rem;}
+      .hero p {font-size: 1.2rem;}
+      .slide img {max-width: 90vw; height: 200px;}
+      .slide h3 {font-size: 1.6rem;}
+      .slide p {font-size: 1rem; max-width: 90vw;}
+      .carrusel-container {max-width: 98vw;}
+      #video-hidroponia {max-width: 98vw;}
+      #que-es {max-width: 98vw;}
+    }
+    @media(max-width:768px) {
+      .cuadros-sistema {flex-direction: column; align-items: center;}
+      .cuadro {width: 90vw;}
+    }
+    @media(max-width:500px) {
+      nav ul {gap: 1rem;}
+      .hero h1 {font-size: 1.6rem;}
+      .hero p {font-size: .95rem;}
+      .carrusel-container h2, #elige-sistema h2 {font-size: 1.5rem;}
+      .slide img {height: 120px;}
+      .cuadro {padding: 1.2rem .7rem;}
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ---------- NAV ---------- -->
+  <nav>
+    <ul>
+      <li><a href="inicio.html" class="active">Inicio</a></li>
+      <li><a href="prototipo.html">Explorador Satelital</a></li>
+      <li><a href="materiales.html">Indices vegetativos</a></li>
+      <li><a href="beneficios.html">Cambio Global</a></li>
+      <li><a href="agrotradicional.html">Interactua</a></li>
+      <li><a href="nosotros.html">Evidencia</a></li>
+      <li><a href="usuarios/perfil.php">Nosotros</a></li>
+    </ul>
+  </nav>
+
+  <!-- ---------- HERO ---------- -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Descubre más sobre la super floración</h1>
+      <p>Conoce más sobre este innovador proyecto</p>
+      <a href="#carrusel" class="btn">Conoce Más</a>
+    </div>
+    <!-- Gotas de lluvia -->
+  </section>
+
+  <!-- ---------- CARRUSEL ---------- -->
+  <section id="carrusel" class="carrusel-container">
+    <h2>Tipos principales de inflorescencia</h2>
+
+    <div class="slider">
+      <div class="slides">
+        <div class="slide">
+          <img src="img/Racemosas.jpg" alt="Inflorescencia Racemosas o Indeterminadas">
+          <h3>Inflorescencia Racemosas</h3>
+          <p>Las inflorescencias racimosas o indeterminadas son estructuras florales donde el eje principal continúa creciendo indefinidamente, produciendo flores lateralmente en una secuencia acropétala (las más viejas abajo/base, las más jóvenes arriba/ápice)</p>
+          
+        </div>
+
+        <div class="slide">
+          <img src="img/cimosas.jpg" alt="Inflorencias Cimosas">
+          <h3>Inflorencias Cimosas</h3>
+          <p>Las inflorescencias cimosas o determinadas son un tipo de arreglo floral en el que el eje principal de la inflorescencia se detiene al formar una flor en su extremo (la flor más antigua), y el crecimiento continúa mediante brotes laterales, los cuales también terminan en flores</p>
+          
+        </div>
+
+        <div class="slide">
+          <img src="img/ciclo.jpg" alt="Aeroponía">
+          <h3>Según Ciclo de Vida</h3>
+          <p>Las flores se clasifican según su ciclo de vida en anuales, que completan su ciclo en una temporada; bienales, que lo hacen en dos temporadas; y perennes, que viven y florecen durante varios años.</p>
+          
+        </div>
+      </div>
+
+      <div class="controles">
+        <button id="prev">&#10094;</button>
+        <button id="next">&#10095;</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ---------- QUÉ ES ---------- -->
+  <section id="que-es">
+    <h2>¿Qué es la Super Floración?</h2>
+    <p>
+      La superfloración es un fenómeno natural en el que una cantidad excepcional de flores silvestres germinan y florecen simultáneamente en una región, especialmente en desiertos, después de una temporada de lluvias inusualmente abundante. Este evento, que ocurre rara vez, transforma el paisaje, tiñéndolo de vibrantes colores y creando espectaculares "alfombras de flores", como se ha visto en California y otras zonas desérticas.
+    </p>
+  </section>
+
+  <!-- ---------- ELIGE SISTEMA ---------- -->
+  <section id="elige-sistema">
+    <h2>Condiciones para que ocurrauna super floración</h2>
+    <div class="cuadros-sistema">
+      <div class="cuadro" tabindex="0">
+        <span class="icono-planta">🌱</span>
+        <div style="font-size:3rem;margin-bottom:1rem">💧</div>
+        <h3>LLUVIA</h3>
+        <p>Requiere una cantidad inusualmente alta de lluvia en una zona árida, que caiga en la temporada adecuada (generalmente el invierno) y de manera bien distribuida..</p>
+      </div>
+      <div class="cuadro" tabindex="0">
+        <span class="icono-sol">☀️</span>
+        <div style="font-size:3rem;margin-bottom:1rem">🛟</div>
+        <h3>LATENCIA</h3>
+        <p>Las semillas de las flores silvestres permanecen inactivas, o latentes, en el suelo del desierto durante años, esperando las condiciones adecuadas para germinar todas al mismo tiempo.</p>
+      </div>
+      <div class="cuadro" tabindex="0">
+        <span class="icono-planta">🌱</span>
+        <div style="font-size:3rem;margin-bottom:1rem">💧</div>
+        <h3>TIEMPO</h3>
+        <p>Se necesita una sincronización perfecta de la lluvia y las temperaturas para que la germinación y la floración masiva ocurran en la primavera siguiente.</p>
+      </div>
+      <div class="cuadro" tabindex="0">
+        <span class="icono-sol">☀️</span>
+        <div style="font-size:3rem;margin-bottom:1rem">🌬️</div>
+        <h3>SUELO</h3>
+        <p>Es fundamental que el suelo del desierto tenga las características necesarias (como baja salinidad) para que las semillas germinen y prosperen.</p>
+      </div>
+      <div class="cuadro" tabindex="0">
+        <span class="icono-planta">🌱</span>
+        <div style="font-size:3rem;margin-bottom:1rem">🌱</div>
+        <h3>TEMPERATURA</h3>
+        <p>Las temperaturas primaverales deben ser las adecuadas, ni demasiado frías ni demasiado calurosas, para no interrumpir el proceso de floración</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- AUDIO ---------- -->
+  <div class="audio-box">
+    <audio id="musicaFondo" controls loop>
+      <source src="musicar1.mp3" type="audio/mpeg">
+      Tu navegador no soporta audio.
+    </audio>
+    <button id="muteBtn" class="audio-btn" title="Silenciar/Reproducir música">🔊</button>
+  </div>
+
+  <!-- ---------- SCRIPTS ---------- -->
+  <script>
+    /* --- Carrusel --- */
+    const slides = document.querySelector('.slides');
+    const slideCount = slides.children.length;
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    let index = 0;
+
+    function showSlide(i) {
+      index = (i < 0) ? slideCount - 1 : (i >= slideCount) ? 0 : i;
+      slides.style.transform = `translateX(${-index * 100}%)`;
+      slides.style.opacity = 0.7;
+      setTimeout(() => { slides.style.opacity = 1; }, 300);
+    }
+    prevBtn.onclick = () => showSlide(index - 1);
+    nextBtn.onclick = () => showSlide(index + 1);
+    setInterval(() => showSlide(index + 1), 8000);
+    showSlide(index);
+
+    /* --- Video botón play --- */
+    const video = document.getElementById('videoHidroponia');
+    const btnPlay = document.getElementById('btnPlayVideo');
+    const txtOv = document.getElementById('textoOverlay');
+
+    btnPlay.addEventListener('mouseenter', () => btnPlay.style.transform = 'translate(-50%,-50%) scale(1.15)');
+    btnPlay.addEventListener('mouseleave', () => btnPlay.style.transform = 'translate(-50%,-50%) scale(1)');
+    btnPlay.onclick = () => {
+      video.play();
+      video.muted = false;
+      btnPlay.style.display = 'none';
+      txtOv.style.opacity = 0;
+    };
+
+    /* --- Gotas de lluvia dinámicas --- */
+    function crearGotas() {
+      const hero = document.querySelector('.hero');
+      for(let i=0; i<30; i++) {
+        const gota = document.createElement('div');
+        gota.classList.add('gota');
+        gota.style.left = Math.random() * 100 + 'vw';
+        gota.style.animationDuration = (1 + Math.random()*2) + 's';
+        gota.style.animationDelay = (Math.random()*5) + 's';
+        hero.appendChild(gota);
+      }
+    }
+    crearGotas();
+
+    /* --- Control de música --- */
+    const musica = document.getElementById('musicaFondo');
+    const muteBtn = document.getElementById('muteBtn');
+    let muted = false;
+    muteBtn.onclick = () => {
+      muted = !muted;
+      musica.muted = muted;
+      muteBtn.textContent = muted ? '🔇' : '🔊';
+    };
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
